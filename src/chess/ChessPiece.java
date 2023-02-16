@@ -2,6 +2,7 @@ package chess;
 
 import boardgame.Board;
 import boardgame.Piece;
+import boardgame.Position;
 
 public abstract class ChessPiece extends Piece {
 
@@ -17,5 +18,11 @@ public abstract class ChessPiece extends Piece {
 	}
 	
 	// Não permitir que a cor de uma peça seja modificada. Remover o setColor()
+	
+	protected boolean isThereOpponentPiece(Position position) {
+		ChessPiece p = (ChessPiece) getBoard().piece(position);  // Downcasting
+		
+		return p != null && p.getColor() != color;
+	}
 
 }

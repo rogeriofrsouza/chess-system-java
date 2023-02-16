@@ -13,9 +13,9 @@ public class Program {
 
 	public static void main(String[] args) {
 		
-		// Desenvolvimento em camadas: o programa principal deve reconhecer apenas a camada de xadrez e nãod e tabuleiro
+		// Desenvolvimento em camadas: o programa principal deve reconhecer apenas a camada de xadrez e não de tabuleiro
 		Locale.setDefault(Locale.US);
-		Scanner sc = new Scanner(System.in);	
+		Scanner sc = new Scanner(System.in);
 		ChessMatch chessMatch = new ChessMatch();
 		
 		while (true) {
