@@ -9,10 +9,14 @@ import chess.pieces.Rook;
 // Coração do sistema de xadrez, contém as regras do jogo de xadrez
 public class ChessMatch {
 
+	private int turn;
+	private Color currentPlayer;
 	private Board board;
 	
 	public ChessMatch() {
 		board = new Board(8, 8);  // Esta classe deve saber as dimensões de um jogo de xadrez
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		
 		initialSetup();
 	}
@@ -32,6 +36,14 @@ public class ChessMatch {
         placeNewPiece('e', 7, new Rook(board, Color.BLACK));
         placeNewPiece('e', 8, new Rook(board, Color.BLACK));
         placeNewPiece('d', 8, new King(board, Color.BLACK));
+	}
+	
+	public int getTurn() {
+		return turn;
+	}
+	
+	public Color getCurrentPlayer() {
+		return currentPlayer;
 	}
 	
 	// Coloca peça recebendo a posição nas coordenadas do xadrez
@@ -66,6 +78,7 @@ public class ChessMatch {
 		validateTargetPosition(source, target);
 		
 		Piece capturedPiece = makeMove(source, target);
+		nextTurn();
 		
 		return (ChessPiece) capturedPiece;  // Downcasting
 	}
@@ -73,6 +86,10 @@ public class ChessMatch {
 	private void validateSourcePosition(Position position) {
 		if (!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece on source position");
+		}
+		
+		if (currentPlayer != ((ChessPiece) board.piece(position)).getColor()) {
+			throw new ChessException("The chosen piece is not yours");
 		}
 		
 		if (!board.piece(position).isThereAnyPossibleMove()) {
@@ -93,6 +110,11 @@ public class ChessMatch {
 		board.placePiece(p, target);
 		
 		return capturedPiece;
+	}
+	
+	private void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
 	}
 	
 }
