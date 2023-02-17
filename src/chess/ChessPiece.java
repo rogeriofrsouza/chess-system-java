@@ -19,6 +19,10 @@ public abstract class ChessPiece extends Piece {
 	
 	// Não permitir que a cor de uma peça seja modificada. Remover o setColor()
 	
+	public ChessPosition getChessPosition() {
+		return ChessPosition.fromPosition(position);
+	}
+	
 	protected boolean isThereOpponentPiece(Position position) {
 		ChessPiece p = (ChessPiece) getBoard().piece(position);  // Downcasting
 		
