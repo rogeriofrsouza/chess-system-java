@@ -8,11 +8,11 @@ import chess.Color;
 
 public class King extends ChessPiece {
 
-	private ChessMatch chessMatch;
+	private ChessMatch chessMatch;  // Dependência para a partida
 	
 	public King(Board board, Color color, ChessMatch chessMatch) {
 		super(board, color);
-		this.chessMatch = chessMatch;
+		this.chessMatch = chessMatch;  // Associação entre os objetos
 	}
 
 	@Override
