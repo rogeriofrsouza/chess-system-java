@@ -1,5 +1,6 @@
 package chess;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import chess.pieces.Pawn;
 import chess.pieces.Queen;
 import chess.pieces.Rook;
 
-// Coração do sistema de xadrez, contém as regras do jogo de xadrez
+// Coração do sistema de xadrez, contém as regras do jogo
 public class ChessMatch {
 
 	private int turn;
@@ -22,6 +23,7 @@ public class ChessMatch {
 	private boolean check;
 	private boolean checkMate;
 	private ChessPiece enPassantVulnerable;
+	private ChessPiece promoted;
 	
 	private Board board;
 	
@@ -54,6 +56,10 @@ public class ChessMatch {
 	
 	public ChessPiece getEnPassantVulnerable() {
 		return enPassantVulnerable;
+	}
+	
+	public ChessPiece getPromoted() {
+		return promoted;
 	}
 	
 	// Inicia a partida de xadrez colocando as peças no tabuleiro
@@ -93,7 +99,7 @@ public class ChessMatch {
         placeNewPiece('h', 2, new Pawn(board, Color.WHITE, this));
 	}
 	
-	// Coloca peça recebendo a posição nas coordenadas do xadrez
+	// Coloca uma peça recebendo a posição nas coordenadas do xadrez
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
 		piecesOnTheBoard.add(piece);
@@ -135,13 +141,24 @@ public class ChessMatch {
 		
 		ChessPiece movedPiece = (ChessPiece) board.piece(target);
 		
+		// Special move: Promotion
+		promoted = null;
+		
+		if (movedPiece instanceof Pawn) {
+			if ((movedPiece.getColor() == Color.WHITE && target.getRow() == 0) || (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
+				promoted = movedPiece;
+				
+				promoted = replacePromotedPiece("Q");
+			}
+		}
+		
 		check = (testCheck(opponent(currentPlayer)));
 		
 		if (testCheckMate(opponent(currentPlayer))) {
 			checkMate = true;
 		}
 		else {
-			nextTurn();			
+			nextTurn();
 		}
 		
 		// Special move: En Passant
@@ -173,6 +190,35 @@ public class ChessMatch {
 		if (!board.piece(source).possibleMove(target)) {
 			throw new ChessException("The chosen piece can't move to target position");
 		}
+	}
+	
+	public ChessPiece replacePromotedPiece(String type) {
+		if (promoted == null) {
+			throw new IllegalStateException("There is no piece to be promoted");
+		}
+		
+		// Comparando uma String com outra (tipo classe)
+		if (!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")) {
+			throw new InvalidParameterException("Invalid type for promotion");
+		}
+		
+		Position pos = promoted.getChessPosition().toPosition();
+		Piece p = board.removePiece(pos);
+		piecesOnTheBoard.remove(p);
+		
+		ChessPiece newPiece = newPiece(type, promoted.getColor());
+		board.placePiece(newPiece, pos);
+		piecesOnTheBoard.add(newPiece);
+		
+		return newPiece;
+	}
+	
+	private ChessPiece newPiece(String type, Color color) {
+		if (type.equals("B")) return new Bishop(board, color);
+		if (type.equals("N")) return new Knight(board, color);
+		if (type.equals("R")) return new Rook(board, color);
+		
+		return new Queen(board, color);
 	}
 	
 	private Piece makeMove(Position source, Position target) {
