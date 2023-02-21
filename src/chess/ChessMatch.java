@@ -98,7 +98,7 @@ public class ChessMatch {
         placeNewPiece('h', 2, new Pawn(board, Color.WHITE, this));
 	}
 	
-	// Coloca uma peça recebendo a posição nas coordenadas do xadrez
+	// Coloca uma peça no tabuleiro recebendo a posição nas coordenadas do xadrez
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
 		piecesOnTheBoard.add(piece);
@@ -138,18 +138,6 @@ public class ChessMatch {
 			throw new ChessException("You can't put yourself in check");
 		}
 		
-		ChessPiece movedPiece = (ChessPiece) board.piece(target);
-		
-		// Special move: Promotion
-		promoted = null;
-		
-		if (movedPiece instanceof Pawn) {
-			if ((movedPiece.getColor() == Color.WHITE && target.getRow() == 0) || (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
-				promoted = movedPiece;			
-				promoted = replacePromotedPiece("Q");
-			}
-		}
-		
 		check = (testCheck(opponent(currentPlayer)));
 		
 		if (testCheckMate(opponent(currentPlayer))) {
@@ -157,6 +145,18 @@ public class ChessMatch {
 		}
 		else {
 			nextTurn();
+		}
+		
+		ChessPiece movedPiece = (ChessPiece) board.piece(target);
+		
+		// Special move: Promotion
+		promoted = null;
+		
+		if (movedPiece instanceof Pawn) {
+			if ((movedPiece.getColor() == Color.WHITE && target.getRow() == 0) || (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
+				promoted = movedPiece;
+				promoted = replacePromotedPiece("Q");
+			}
 		}
 		
 		// Special move: En Passant
@@ -188,35 +188,6 @@ public class ChessMatch {
 		if (!board.piece(source).possibleMove(target)) {
 			throw new ChessException("The chosen piece can't move to target position");
 		}
-	}
-	
-	public ChessPiece replacePromotedPiece(String type) {
-		if (promoted == null) {
-			throw new IllegalStateException("There is no piece to be promoted");
-		}
-		
-		// Comparando uma String com outra (tipo classe)
-		if (!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")) {
-			return promoted;
-		}
-		
-		Position pos = promoted.getChessPosition().toPosition();
-		Piece p = board.removePiece(pos);
-		piecesOnTheBoard.remove(p);
-		
-		ChessPiece newPiece = newPiece(type, promoted.getColor());
-		board.placePiece(newPiece, pos);
-		piecesOnTheBoard.add(newPiece);
-		
-		return newPiece;
-	}
-	
-	private ChessPiece newPiece(String type, Color color) {
-		if (type.equals("B")) return new Bishop(board, color);
-		if (type.equals("N")) return new Knight(board, color);
-		if (type.equals("R")) return new Rook(board, color);
-		
-		return new Queen(board, color);
 	}
 	
 	private Piece makeMove(Position source, Position target) {
@@ -325,11 +296,23 @@ public class ChessMatch {
 	
 	private void nextTurn() {
 		turn++;
-		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+		currentPlayer = opponent(currentPlayer);
 	}
-	
-	private Color opponent(Color color) {
-		return (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+
+	private boolean testCheck(Color color) {
+		Position kingPosition = king(color).getChessPosition().toPosition();
+		
+		List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == opponent(color)).collect(Collectors.toList());
+		
+		for (Piece p : opponentPieces) {
+			boolean[][] mat = p.possibleMoves();
+			
+			if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	private ChessPiece king(Color color) {
@@ -345,20 +328,8 @@ public class ChessMatch {
 		throw new IllegalStateException("There is no " + color + " king on the board");
 	}
 	
-	private boolean testCheck(Color color) {
-		Position kingPosition = king(color).getChessPosition().toPosition();
-		
-		List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == opponent(color)).collect(Collectors.toList());
-		
-		for (Piece p : opponentPieces) {
-			boolean[][] mat = p.possibleMoves();
-			
-			if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
-				return true;
-			}
-		}
-		
-		return false;
+	private Color opponent(Color color) {
+		return (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
 	}
 	
 	private boolean testCheckMate(Color color) {
@@ -390,6 +361,35 @@ public class ChessMatch {
 		}
 		
 		return true;
+	}
+	
+	public ChessPiece replacePromotedPiece(String type) {
+		if (promoted == null) {
+			throw new IllegalStateException("There is no piece to be promoted");
+		}
+		
+		// Comparando uma String com outra (tipo classe)
+		if (!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")) {
+			return promoted;
+		}
+		
+		Position pos = promoted.getChessPosition().toPosition();
+		Piece p = board.removePiece(pos);
+		piecesOnTheBoard.remove(p);
+		
+		ChessPiece newPiece = newPiece(type, promoted.getColor());
+		board.placePiece(newPiece, pos);
+		piecesOnTheBoard.add(newPiece);
+		
+		return newPiece;
+	}
+	
+	private ChessPiece newPiece(String type, Color color) {
+		if (type.equals("B")) return new Bishop(board, color);
+		if (type.equals("N")) return new Knight(board, color);
+		if (type.equals("R")) return new Rook(board, color);
+		
+		return new Queen(board, color);
 	}
 	
 }

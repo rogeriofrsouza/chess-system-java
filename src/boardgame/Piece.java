@@ -23,8 +23,8 @@ public abstract class Piece {
 	public abstract boolean[][] possibleMoves();
 	
 	/*
-	 *  Hook method: método que faz um gancho com a subclasse.
-	 *  Chama uma possível implementação de alguma subclasse concreta da classe Piece
+	 * Hook method: método que faz um gancho com a subclasse.
+	 * Chama uma possível implementação de alguma subclasse concreta da classe Piece
 	 */
 	public boolean possibleMove(Position position) {
 		return possibleMoves()[position.getRow()][position.getColumn()];

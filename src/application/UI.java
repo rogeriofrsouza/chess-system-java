@@ -96,32 +96,18 @@ public class UI {
 		}
 		
 		if (piece == null) {
-			System.out.print("-" + ANSI_RESET);
+			System.out.print("-");
 		}
 		else {
 			if (piece.getColor() == Color.WHITE) {
-                System.out.print(ANSI_WHITE + piece + ANSI_RESET);
+                System.out.print(ANSI_WHITE + piece);
             }
             else {
-                System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
+                System.out.print(ANSI_YELLOW + piece);
             }
 		}
 		
-		System.out.print(" ");
-	}
-	
-	public static ChessPosition readChessPosition(Scanner sc) {
-		try {
-			String s = sc.nextLine();
-			
-			char column = s.charAt(0);
-			int row = Integer.parseInt(s.substring(1));
-			
-			return new ChessPosition(column, row);
-		}
-		catch (RuntimeException e) {
-			throw new InputMismatchException("Error reading ChessPosition. Valid values are from a1 to h8.");
-		}
+		System.out.print(ANSI_RESET + " ");
 	}
 	
 	private static void printCapturedPieces(List<ChessPiece> captured) {
@@ -137,8 +123,22 @@ public class UI {
 		
 		System.out.print("Black: ");
 		System.out.print(ANSI_YELLOW);
-		System.out.println(Arrays.toString(black.toArray()));  // Imprime um array de valores
+		System.out.println(Arrays.toString(black.toArray()));
 		System.out.print(ANSI_RESET);
+	}
+	
+	public static ChessPosition readChessPosition(Scanner sc) {
+		try {
+			String s = sc.nextLine();
+			
+			char column = s.charAt(0);
+			int row = Integer.parseInt(s.substring(1));
+			
+			return new ChessPosition(column, row);
+		}
+		catch (RuntimeException e) {
+			throw new InputMismatchException("Error reading ChessPosition. Valid values are from a1 to h8.");
+		}
 	}
 	
 }
