@@ -1,5 +1,5 @@
 # PROJETO: Sistema jogo de xadrez
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/rogeriofrsouza/workshop-springboot3-mongodb/blob/main/LICENSE)
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/rogeriofrsouza/chess-system-java/blob/main/LICENSE)
 
 
 ## Sobre o projeto
