@@ -1,9 +1,9 @@
-package com.rogeriofrsouza.chess;
+package com.rogeriofrsouza.app;
 
-import chess.ChessException;
-import chess.ChessMatch;
-import chess.ChessPiece;
-import chess.ChessPosition;
+import com.rogeriofrsouza.app.chess.ChessException;
+import com.rogeriofrsouza.app.chess.ChessMatch;
+import com.rogeriofrsouza.app.chess.ChessPiece;
+import com.rogeriofrsouza.app.chess.ChessPosition;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
