@@ -1,37 +1,33 @@
-# PROJETO: Sistema jogo de xadrez
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/rogeriofrsouza/chess-system-java/blob/main/LICENSE)
+# Chess system in Java ☕
 
+<!--toc:start-->
+- [About](#about)
+- [Class diagram](#class-diagram)
+- [How to run](#how-to-run)
+<!--toc:end-->
 
-## Sobre o projeto
-Esta é uma aplicação de console desenvolvida durante o curso [**Java COMPLETO 2023 Programação Orientada a Objetos +Projetos**](https://www.udemy.com/course/java-curso-completo/), ministrado pelo professor [Nelio Alves](https://www.udemy.com/user/nelio-alves/ "Perfil do Nelio Alves na Udemy").
+[![License](https://img.shields.io/npm/l/react)](https://github.com/rogeriofrsouza/chess-system-java/blob/main/LICENSE)
 
-Este projeto consiste em um jogo de xadrez, permitindo que dois jogadores executem comandos e movimentos em suas peças a fim de capturar o rei oponente e vencer o jogo. Deve ser executado em um terminal gráfico para a correta exibição de cores durante a execução. Possui também a lógica dos movimentos especiais do xadrez: Castling, En Passant e Promotion.
+## About
 
+This is a CLI application developed during the course [**Java COMPLETO 2023 Programação Orientada a Objetos +Projetos**](https://www.udemy.com/course/java-curso-completo/), taught by the professor [Nelio Alves](https://www.udemy.com/user/nelio-alves/ "Perfil do Nelio Alves na Udemy").
 
-## Modelo conceitual
-![Modelo Conceitual](https://raw.githubusercontent.com/rogeriofrsouza/java-poo/main/assets/chess-system-design.png)
+This project consists of a chess game, allowing two players to execute commands and movements on their pieces in order to capture the opposing king and win the game.
+It also supports special chess moves like: Castling, En Passant and Promotion.
 
+It must be executed in a terminal with colors support for correct color displaying during runtime.
 
-## Como executar o projeto
-Pré-requisitos: Java 17, Apache Maven
+## Class diagram
 
-```bash
-# Clonar repositório
+![Class diagram](https://raw.githubusercontent.com/rogeriofrsouza/java-poo/main/assets/chess-system-design.png)
+
+## How to run
+
+Requirements: JDK 17+, Apache Maven
+
+```sh
 git clone https://github.com/rogeriofrsouza/chess-system-java.git
-
-# Entrar na pasta do projeto
 cd chess-system-java
-
-# Compilar o projeto
-mvn compile
-mvn package
-
-# Executar o projeto
-java -jar target/chess.system-0.1.0.jar
+./mvnw dependency:resolve clean package
+java -jar target/chess-system*
 ```
-
-## Autor
-
-Rogério Ferreira de Souza
-
-https://www.linkedin.com/in/rogeriofrsouza
