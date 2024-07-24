@@ -9,16 +9,14 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Program {
 
     public static void main(String[] args) {
-
-        // Desenvolvimento em camadas: o programa principal deve reconhecer apenas a camada de
-        // xadrez e não de tabuleiro
         Locale.setDefault(Locale.US);
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         ChessMatch chessMatch = new ChessMatch();
         List<ChessPiece> captured = new ArrayList<>();
@@ -28,44 +26,33 @@ public class Program {
                 UI.clearScreen();
                 UI.printMatch(chessMatch, captured);
 
-                System.out.println();
-                System.out.print("Source: ");
-                ChessPosition source = UI.readChessPosition(sc);
-
+                System.out.print("\nSource: ");
+                ChessPosition source = UI.readChessPosition(scanner);
                 boolean[][] possibleMoves = chessMatch.possibleMoves(source);
+
                 UI.clearScreen();
                 UI.printBoard(chessMatch.getPieces(), possibleMoves);
 
-                System.out.println();
-                System.out.print("Target: ");
-                ChessPosition target = UI.readChessPosition(sc);
+                System.out.print("\nTarget: ");
+                ChessPosition target = UI.readChessPosition(scanner);
 
-                ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
-
-                if (capturedPiece != null) {
-                    captured.add(capturedPiece);
-                }
+                Optional.ofNullable(chessMatch.performChessMove(source, target))
+                        .ifPresent(captured::add);
 
                 if (chessMatch.getPromoted() != null) {
                     System.out.print("Enter piece for promotion (B/N/R/Q): ");
-                    String type = sc.nextLine().toUpperCase();
+                    String type = scanner.nextLine().substring(0, 1).toUpperCase();
 
-                    while (!type.equals("B")
-                            && !type.equals("N")
-                            && !type.equals("R")
-                            && !type.equals("Q")) {
-                        System.out.print("Invalid value! Enter piece for promotion (B/N/R/Q): ");
-                        type = sc.nextLine().toUpperCase();
+                    while (!List.of("B", "N", "R", "Q").contains(type)) {
+                        System.err.print("Invalid value! Enter piece for promotion (B/N/R/Q): ");
+                        type = scanner.nextLine().substring(0, 1).toUpperCase();
                     }
 
                     chessMatch.replacePromotedPiece(type);
                 }
-            } catch (ChessException e) {
-                System.out.println(e.getMessage());
-                sc.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
-                sc.nextLine();
+            } catch (ChessException | InputMismatchException exception) {
+                System.err.println(exception.getMessage());
+                scanner.nextLine();
             }
         }
 
