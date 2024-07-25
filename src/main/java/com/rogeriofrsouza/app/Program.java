@@ -18,23 +18,24 @@ public class Program {
         Locale.setDefault(Locale.US);
         Scanner scanner = new Scanner(System.in);
 
+        UI ui = new UI();
         ChessMatch chessMatch = new ChessMatch();
         List<ChessPiece> captured = new ArrayList<>();
 
         while (!chessMatch.getCheckMate()) {
             try {
-                UI.clearScreen();
-                UI.printMatch(chessMatch, captured);
+                ui.clearScreen();
+                ui.printMatch(chessMatch, captured);
 
                 System.out.print("\nSource: ");
-                ChessPosition source = UI.readChessPosition(scanner);
+                ChessPosition source = ui.readChessPosition(scanner);
                 boolean[][] possibleMoves = chessMatch.possibleMoves(source);
 
-                UI.clearScreen();
-                UI.printBoard(chessMatch.getPieces(), possibleMoves);
+                ui.clearScreen();
+                ui.printBoard(chessMatch.getPieces(), possibleMoves);
 
                 System.out.print("\nTarget: ");
-                ChessPosition target = UI.readChessPosition(scanner);
+                ChessPosition target = ui.readChessPosition(scanner);
 
                 Optional.ofNullable(chessMatch.performChessMove(source, target))
                         .ifPresent(captured::add);
@@ -56,7 +57,7 @@ public class Program {
             }
         }
 
-        UI.clearScreen();
-        UI.printMatch(chessMatch, captured);
+        ui.clearScreen();
+        ui.printMatch(chessMatch, captured);
     }
 }
