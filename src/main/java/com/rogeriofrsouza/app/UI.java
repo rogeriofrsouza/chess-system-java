@@ -14,8 +14,7 @@ import java.util.stream.Collectors;
 public class UI {
 
     // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
-
-    public static final String ANSI_RESET = "\u001B[0m"; // Cores do texto
+    public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
@@ -25,7 +24,7 @@ public class UI {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m"; // Cores do fundo
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
     public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
@@ -108,7 +107,6 @@ public class UI {
     }
 
     private static void printCapturedPieces(List<ChessPiece> captured) {
-        // Operações para filtrar a lista
         List<ChessPiece> white =
                 captured.stream()
                         .filter(x -> x.getColor() == Color.WHITE)
