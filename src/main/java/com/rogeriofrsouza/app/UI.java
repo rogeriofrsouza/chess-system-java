@@ -5,7 +5,6 @@ import com.rogeriofrsouza.app.chess.ChessPiece;
 import com.rogeriofrsouza.app.chess.ChessPosition;
 import com.rogeriofrsouza.app.chess.Color;
 
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -45,29 +44,20 @@ public class UI {
 
         System.out.println("\nTurn: " + chessMatch.getTurn());
 
-        if (!chessMatch.getCheckMate()) {
-            System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
-
-            if (chessMatch.getCheck()) {
-                System.out.println("CHECK!");
-            }
-        } else {
+        if (chessMatch.getCheckMate()) {
             System.out.println("CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer());
+            return;
+        }
+
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+
+        if (chessMatch.getCheck()) {
+            System.out.println("CHECK!");
         }
     }
 
     public void printBoard(ChessPiece[][] pieces) {
-        for (int i = 0; i < pieces.length; i++) {
-            System.out.print((8 - i) + " ");
-
-            for (int j = 0; j < pieces.length; j++) {
-                printPiece(pieces[i][j], false);
-            }
-
-            System.out.println();
-        }
-
-        System.out.println("  a b c d e f g h");
+        printBoard(pieces, null);
     }
 
     public void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
@@ -75,7 +65,8 @@ public class UI {
             System.out.print((8 - i) + " ");
 
             for (int j = 0; j < pieces.length; j++) {
-                printPiece(pieces[i][j], possibleMoves[i][j]);
+                boolean possibleMove = possibleMoves != null && possibleMoves[i][j];
+                printPiece(pieces[i][j], possibleMove);
             }
 
             System.out.println();
@@ -92,11 +83,8 @@ public class UI {
         if (piece == null) {
             System.out.print("-");
         } else {
-            if (piece.getColor() == Color.WHITE) {
-                System.out.print(ANSI_WHITE + piece);
-            } else {
-                System.out.print(ANSI_YELLOW + piece);
-            }
+            String color = piece.getColor() == Color.WHITE ? ANSI_WHITE : ANSI_YELLOW;
+            System.out.print(color + piece);
         }
 
         System.out.print(ANSI_RESET + " ");
@@ -105,36 +93,29 @@ public class UI {
     private void printCapturedPieces(List<ChessPiece> captured) {
         List<ChessPiece> white =
                 captured.stream()
-                        .filter(x -> x.getColor() == Color.WHITE)
+                        .filter(piece -> piece.getColor() == Color.WHITE)
                         .collect(Collectors.toList());
         List<ChessPiece> black =
                 captured.stream()
-                        .filter(x -> x.getColor() == Color.BLACK)
+                        .filter(piece -> piece.getColor() == Color.BLACK)
                         .collect(Collectors.toList());
 
-        System.out.println("\nCaptured pieces");
-        System.out.print("White: ");
-        System.out.print(ANSI_WHITE);
-        System.out.println(Arrays.toString(white.toArray()));
-        System.out.print(ANSI_RESET);
-
-        System.out.print("Black: ");
-        System.out.print(ANSI_YELLOW);
-        System.out.println(Arrays.toString(black.toArray()));
-        System.out.print(ANSI_RESET);
+        System.out.printf(
+                "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s",
+                ANSI_WHITE, white, ANSI_RESET, ANSI_YELLOW, black, ANSI_RESET);
     }
 
-    public ChessPosition readChessPosition(Scanner sc) {
-        try {
-            String s = sc.nextLine();
+    public ChessPosition readChessPosition(Scanner scanner) {
+        String input = scanner.nextLine();
 
-            char column = s.charAt(0);
-            int row = Integer.parseInt(s.substring(1));
-
-            return new ChessPosition(column, row);
-        } catch (RuntimeException e) {
+        if (!input.matches("[a-h][1-8]")) {
             throw new InputMismatchException(
                     "Error reading ChessPosition. Valid values are from a1 to h8.");
         }
+
+        char column = input.charAt(0);
+        int row = Character.getNumericValue(input.charAt(1));
+
+        return new ChessPosition(column, row);
     }
 }
