@@ -1,12 +1,12 @@
-# Chess system in Java ☕
+# Chess system CLI in Java ☕
 
+[![License](https://img.shields.io/npm/l/react)](https://github.com/rogeriofrsouza/chess-system-java/blob/main/LICENSE)
 <!--toc:start-->
+
 - [About](#about)
 - [Class diagram](#class-diagram)
 - [How to run](#how-to-run)
 <!--toc:end-->
-
-[![License](https://img.shields.io/npm/l/react)](https://github.com/rogeriofrsouza/chess-system-java/blob/main/LICENSE)
 
 ## About
 
@@ -23,7 +23,7 @@ It must be executed in a terminal with colors support for correct color displayi
 
 ## How to run
 
-Requirements: JDK 17+, Apache Maven
+Requirements: JDK 17+
 
 ```sh
 git clone https://github.com/rogeriofrsouza/chess-system-java.git
