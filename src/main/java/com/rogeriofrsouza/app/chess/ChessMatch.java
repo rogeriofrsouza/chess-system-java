@@ -10,11 +10,13 @@ import com.rogeriofrsouza.app.chess.pieces.Pawn;
 import com.rogeriofrsouza.app.chess.pieces.Queen;
 import com.rogeriofrsouza.app.chess.pieces.Rook;
 
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Coração do sistema de xadrez, contém as regras do jogo
+@Setter
 public class ChessMatch {
 
     private int turn;
