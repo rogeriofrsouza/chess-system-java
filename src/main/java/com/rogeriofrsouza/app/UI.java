@@ -32,9 +32,13 @@ public class UI {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+    // https://gist.github.com/ConnerWill/d4b6c776b509add763e17f9f113fd25b
+    public static final String ANSI_MOVE_CURSOR_HOME = "\033[H";
+    public static final String ANSI_CLEAR_SCREEN = "\033[2J";
+
     // https://stackoverflow.com/questions/2979383/java-clear-the-console
     public void clearScreen() {
-        System.out.print("\033[H\033[2J");
+        System.out.print(ANSI_MOVE_CURSOR_HOME + ANSI_CLEAR_SCREEN);
         System.out.flush();
     }
 
