@@ -77,18 +77,17 @@ public class UI {
         for (int i = 0; i < pieces.length; i++) {
             System.out.print((8 - i) + " ");
 
-            for (int j = 0; j < pieces.length; j++) {
-                boolean possibleMove = possibleMoves != null && possibleMoves[i][j];
-                ChessPiece piece = pieces[i][j];
-                if (possibleMove) {
+            for (int j = 0; j < pieces[i].length; j++) {
+                if (possibleMoves != null && possibleMoves[i][j]) {
                     System.out.print(ANSI_BLUE_BACKGROUND);
                 }
 
-                if (piece == null) {
+                if (pieces[i][j] == null) {
                     System.out.print("-");
                 } else {
-                    String color = piece.getColor() == Color.WHITE ? ANSI_WHITE : ANSI_YELLOW;
-                    System.out.print(color + piece);
+                    String color =
+                            pieces[i][j].getColor() == Color.WHITE ? ANSI_WHITE : ANSI_YELLOW;
+                    System.out.print(color + pieces[i][j]);
                 }
 
                 System.out.print(ANSI_RESET + " ");
