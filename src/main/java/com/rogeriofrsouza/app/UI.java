@@ -39,7 +39,6 @@ public class UI {
     // https://stackoverflow.com/questions/2979383/java-clear-the-console
     public void clearScreen() {
         System.out.print(ANSI_MOVE_CURSOR_HOME + ANSI_CLEAR_SCREEN);
-        System.out.flush();
     }
 
     public void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
