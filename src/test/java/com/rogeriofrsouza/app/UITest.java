@@ -22,7 +22,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,18 +55,25 @@ class UITest {
     @DisplayName("should print the match information and status")
     void printMatch_notCheckNotCheckmate_logMatch() {
         ChessMatch chessMatch = new ChessMatch();
-        List<ChessPiece> captured = new ArrayList<>();
-        StringBuilder stringBuilder = new StringBuilder();
 
+        Board board = new Board(8, 8);
+        List<ChessPiece> captured =
+                List.of(
+                        new Rook(board, Color.WHITE),
+                        new Rook(board, Color.WHITE),
+                        new Rook(board, Color.BLACK),
+                        new Rook(board, Color.BLACK));
+
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append(
                         String.format(
                                 "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s",
                                 UI.ANSI_WHITE,
-                                captured,
+                                captured.subList(0, 2),
                                 UI.ANSI_RESET,
                                 UI.ANSI_YELLOW,
-                                captured,
+                                captured.subList(2, 4),
                                 UI.ANSI_RESET))
                 .append("\nTurn: " + chessMatch.getTurn() + "\n")
                 .append("Waiting player: " + chessMatch.getCurrentPlayer() + "\n");
@@ -88,9 +94,11 @@ class UITest {
         chessMatch.setTurn(50);
         chessMatch.setCurrentPlayer(Color.BLACK);
 
-        List<ChessPiece> captured = new ArrayList<>();
-        StringBuilder stringBuilder = new StringBuilder();
+        Board board = new Board(8, 8);
+        List<ChessPiece> captured =
+                List.of(new Rook(board, Color.WHITE), new Rook(board, Color.WHITE));
 
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append(
                         String.format(
@@ -99,7 +107,7 @@ class UITest {
                                 captured,
                                 UI.ANSI_RESET,
                                 UI.ANSI_YELLOW,
-                                captured,
+                                List.of(),
                                 UI.ANSI_RESET))
                 .append("\nTurn: " + chessMatch.getTurn() + "\n")
                 .append("Waiting player: " + chessMatch.getCurrentPlayer() + "\n")
@@ -121,15 +129,17 @@ class UITest {
         chessMatch.setTurn(10);
         chessMatch.setCurrentPlayer(Color.BLACK);
 
-        List<ChessPiece> captured = new ArrayList<>();
-        StringBuilder stringBuilder = new StringBuilder();
+        Board board = new Board(8, 8);
+        List<ChessPiece> captured =
+                List.of(new Rook(board, Color.BLACK), new Rook(board, Color.BLACK));
 
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append(
                         String.format(
                                 "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s",
                                 UI.ANSI_WHITE,
-                                captured,
+                                List.of(),
                                 UI.ANSI_RESET,
                                 UI.ANSI_YELLOW,
                                 captured,
