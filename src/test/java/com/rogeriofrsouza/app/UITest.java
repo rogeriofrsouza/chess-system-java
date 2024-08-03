@@ -1,6 +1,7 @@
 package com.rogeriofrsouza.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -8,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.chess.ChessMatch;
 import com.rogeriofrsouza.app.chess.ChessPiece;
+import com.rogeriofrsouza.app.chess.ChessPosition;
 import com.rogeriofrsouza.app.chess.Color;
 import com.rogeriofrsouza.app.chess.pieces.Rook;
 
@@ -20,26 +22,40 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 @ExtendWith(MockitoExtension.class)
 class UITest {
 
     @InjectMocks @Spy private UI ui;
 
-    private final PrintStream standardOut = System.out;
-    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    private final PrintStream systemOut = System.out;
+    private ByteArrayOutputStream outputStream;
+
+    private final InputStream systemIn = System.in;
+    private ByteArrayInputStream inputStream;
 
     @BeforeEach
-    void setUp() {
-        System.setOut(new PrintStream(outputStreamCaptor));
+    void setUpOutput() {
+        outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
     }
 
     @AfterEach
-    void tearDown() {
-        System.setOut(standardOut);
+    void restoreSystemInputOutput() {
+        System.setOut(systemOut);
+        System.setIn(systemIn);
+    }
+
+    private void provideInput(String data) {
+        inputStream = new ByteArrayInputStream(data.getBytes());
+        System.setIn(inputStream);
     }
 
     @Test
@@ -48,7 +64,7 @@ class UITest {
         ui.clearScreen();
 
         String expected = UI.ANSI_MOVE_CURSOR_HOME + UI.ANSI_CLEAR_SCREEN;
-        assertEquals(expected, outputStreamCaptor.toString());
+        assertEquals(expected, outputStream.toString());
     }
 
     @Test
@@ -82,7 +98,7 @@ class UITest {
 
         ui.printMatch(chessMatch, captured);
 
-        assertEquals(stringBuilder.toString(), outputStreamCaptor.toString());
+        assertEquals(stringBuilder.toString(), outputStream.toString());
         verify(ui).printBoard(any(ChessPiece[][].class), any());
     }
 
@@ -117,7 +133,7 @@ class UITest {
 
         ui.printMatch(chessMatch, captured);
 
-        assertEquals(stringBuilder.toString(), outputStreamCaptor.toString());
+        assertEquals(stringBuilder.toString(), outputStream.toString());
         verify(ui).printBoard(any(ChessPiece[][].class), any());
     }
 
@@ -151,7 +167,7 @@ class UITest {
 
         ui.printMatch(chessMatch, captured);
 
-        assertEquals(stringBuilder.toString(), outputStreamCaptor.toString());
+        assertEquals(stringBuilder.toString(), outputStream.toString());
         verify(ui).printBoard(any(ChessPiece[][].class), any());
     }
 
@@ -176,7 +192,7 @@ class UITest {
                         UI.ANSI_RESET);
 
         ui.printBoard(pieces, null);
-        assertEquals(stringExpected, outputStreamCaptor.toString());
+        assertEquals(stringExpected, outputStream.toString());
     }
 
     @Test
@@ -204,6 +220,33 @@ class UITest {
                         UI.ANSI_RESET);
 
         ui.printBoard(pieces, possibleMoves);
-        assertEquals(stringExpected, outputStreamCaptor.toString());
+        assertEquals(stringExpected, outputStream.toString());
+    }
+
+    @Test
+    @DisplayName(
+            "should create a ChessPosition object with column and row values provided from input")
+    void readChessPosition_validInput_createChessPosition() {
+        provideInput("a8");
+
+        ChessPosition chessPositionExpected = new ChessPosition('a', 8);
+        ChessPosition chessPositionReal = ui.readChessPosition(new Scanner(System.in));
+
+        assertEquals(chessPositionExpected.getRow(), chessPositionReal.getRow());
+        assertEquals(chessPositionExpected.getColumn(), chessPositionReal.getColumn());
+    }
+
+    @Test
+    @DisplayName("should throw InputMismatchException if input is invalid")
+    void readChessPosition_invalidInput_throwInputMismatchException() {
+        List.of("a9", "i2", "ff", "33", "  b6")
+                .forEach(
+                        input -> {
+                            provideInput(input);
+
+                            assertThrowsExactly(
+                                    InputMismatchException.class,
+                                    () -> ui.readChessPosition(new Scanner(System.in)));
+                        });
     }
 }
