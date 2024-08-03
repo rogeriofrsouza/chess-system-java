@@ -1,8 +1,11 @@
 # Chess system CLI in Java ☕
 
-[![License](https://img.shields.io/npm/l/react)](https://github.com/rogeriofrsouza/chess-system-java/blob/main/LICENSE)
-<!--toc:start-->
+[![License](https://img.shields.io/github/license/rogeriofrsouza/chess-system-java)](https://github.com/rogeriofrsouza/chess-system-java/blob/main/LICENSE)
+[![Language](https://img.shields.io/badge/language-Java-red.svg)](https://dev.java)
+[![Pull Requests](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/rogeriofrsouza/chess-system-java/pulls)
+[![Build](https://github.com/rogeriofrsouza/chess-system-java/actions/workflows/maven.yml/badge.svg)](https://github.com/rogeriofrsouza/chess-system-java/blob/main/.github/workflows/maven.yml)
 
+<!--toc:start-->
 - [About](#about)
 - [Class diagram](#class-diagram)
 - [How to run](#how-to-run)
