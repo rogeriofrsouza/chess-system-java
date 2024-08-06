@@ -40,28 +40,24 @@ public class UI {
                         .filter(piece -> piece.getColor() == Color.BLACK)
                         .collect(Collectors.toList());
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("\nCaptured pieces\n")
-                .append(
-                        String.format(
-                                "White: %s%s%n%sBlack: %s%s%n%s",
-                                ANSI_WHITE, white, ANSI_RESET, ANSI_YELLOW, black, ANSI_RESET))
-                .append("\nTurn: " + chessMatch.getTurn());
+        System.out.println("\nCaptured pieces");
+
+        System.out.printf(
+                "White: %s%s%n%sBlack: %s%s%n%s",
+                ANSI_WHITE, white, ANSI_RESET, ANSI_YELLOW, black, ANSI_RESET);
+
+        System.out.println("\nTurn: " + chessMatch.getTurn());
 
         if (chessMatch.getCheckMate()) {
-            stringBuilder.append("\nCHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer());
-            System.out.println(stringBuilder.toString());
+            System.out.println("CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer());
             return;
         }
 
-        stringBuilder.append("\nWaiting player: " + chessMatch.getCurrentPlayer());
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
 
         if (chessMatch.getCheck()) {
-            stringBuilder.append("\nCHECK!");
+            System.out.println("CHECK!");
         }
-
-        System.out.println(stringBuilder.toString());
     }
 
     public void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
