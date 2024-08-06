@@ -59,10 +59,9 @@ class UITest {
     }
 
     @Test
-    @DisplayName("should clear and flush the console")
+    @DisplayName("should clear the console")
     void clearScreen() {
         ui.clearScreen();
-
         String expected = UI.ANSI_MOVE_CURSOR_HOME + UI.ANSI_CLEAR_SCREEN;
         assertEquals(expected, outputStream.toString());
     }
