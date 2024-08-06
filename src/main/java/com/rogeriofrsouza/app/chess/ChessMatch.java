@@ -10,12 +10,14 @@ import com.rogeriofrsouza.app.chess.pieces.Pawn;
 import com.rogeriofrsouza.app.chess.pieces.Queen;
 import com.rogeriofrsouza.app.chess.pieces.Rook;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 @Setter
 public class ChessMatch {
 
@@ -28,43 +30,17 @@ public class ChessMatch {
 
     private Board board;
 
-    private List<Piece> piecesOnTheBoard =
-            new ArrayList<>(); // Esta instanciação também poderia ser feita no construtor
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
 
     public ChessMatch() {
-        board = new Board(8, 8); // Esta classe deve saber as dimensões de um jogo de xadrez
+        board = new Board(8, 8);
         turn = 1;
         currentPlayer = Color.WHITE;
 
         initialSetup();
     }
 
-    public int getTurn() {
-        return turn;
-    }
-
-    public Color getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public boolean getCheck() {
-        return check;
-    }
-
-    public boolean getCheckMate() {
-        return checkMate;
-    }
-
-    public ChessPiece getEnPassantVulnerable() {
-        return enPassantVulnerable;
-    }
-
-    public ChessPiece getPromoted() {
-        return promoted;
-    }
-
-    // Inicia a partida de xadrez colocando as peças no tabuleiro
     private void initialSetup() {
         placeNewPiece('a', 8, new Rook(board, Color.BLACK));
         placeNewPiece('b', 8, new Knight(board, Color.BLACK));
@@ -101,7 +77,6 @@ public class ChessMatch {
         placeNewPiece('h', 2, new Pawn(board, Color.WHITE, this));
     }
 
-    // Coloca uma peça no tabuleiro recebendo a posição nas coordenadas do xadrez
     private void placeNewPiece(char column, int row, ChessPiece piece) {
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
         piecesOnTheBoard.add(piece);
@@ -112,7 +87,7 @@ public class ChessMatch {
 
         for (int i = 0; i < board.getRows(); i++) {
             for (int j = 0; j < board.getColumns(); j++) {
-                mat[i][j] = (ChessPiece) board.piece(i, j); // Downcasting
+                mat[i][j] = (ChessPiece) board.piece(i, j);
             }
         }
 
@@ -171,7 +146,7 @@ public class ChessMatch {
             enPassantVulnerable = null;
         }
 
-        return (ChessPiece) capturedPiece; // Downcasting
+        return (ChessPiece) capturedPiece;
     }
 
     private void validateSourcePosition(Position position) {
@@ -332,7 +307,6 @@ public class ChessMatch {
             }
         }
 
-        // Esta exceção nunca deve acontecer
         throw new IllegalStateException("There is no " + color + " king on the board");
     }
 
@@ -379,7 +353,6 @@ public class ChessMatch {
             throw new IllegalStateException("There is no piece to be promoted");
         }
 
-        // Comparando uma String com outra (tipo classe)
         if (!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")) {
             return promoted;
         }

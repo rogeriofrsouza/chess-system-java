@@ -83,7 +83,7 @@ public class King extends ChessPiece {
         }
 
         // Special move: Castling
-        if (getMoveCount() == 0 && !chessMatch.getCheck()) {
+        if (getMoveCount() == 0 && !chessMatch.isCheck()) {
 
             // Kingside rook
             Position posT1 = new Position(position.getRow(), position.getColumn() + 3);
