@@ -22,7 +22,7 @@ public class Program {
         ChessMatch chessMatch = new ChessMatch();
         List<ChessPiece> captured = new ArrayList<>();
 
-        while (!chessMatch.isCheckMate()) {
+        while (!chessMatch.getCheckMate()) {
             try {
                 ui.clearScreen();
                 ui.printMatch(chessMatch, captured);
