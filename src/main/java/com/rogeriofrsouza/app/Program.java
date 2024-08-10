@@ -29,7 +29,7 @@ public class Program {
 
                 System.out.print("\nSource: ");
                 ChessPosition source = ui.readChessPosition(scanner);
-                boolean[][] possibleMoves = chessMatch.possibleMoves(source);
+                boolean[][] possibleMoves = chessMatch.computePossibleMoves(source);
 
                 ui.clearScreen();
                 ui.printBoard(chessMatch.getPieces(), possibleMoves);

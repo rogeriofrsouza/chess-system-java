@@ -49,7 +49,8 @@ class ChessMatchTest {
         doReturn(possibleMovesExpected).when(piece).possibleMoves();
 
         assertEquals(
-                possibleMovesExpected, chessMatchMock.possibleMoves(new ChessPosition('a', 4)));
+                possibleMovesExpected,
+                chessMatchMock.computePossibleMoves(new ChessPosition('a', 4)));
 
         verify(piece).possibleMoves();
     }
@@ -65,7 +66,7 @@ class ChessMatchTest {
 
         assertThrowsExactly(
                 ChessException.class,
-                () -> chessMatchMock.possibleMoves(new ChessPosition('a', 4)));
+                () -> chessMatchMock.computePossibleMoves(new ChessPosition('a', 4)));
     }
 
     @Test
@@ -78,7 +79,7 @@ class ChessMatchTest {
 
         assertThrowsExactly(
                 ChessException.class,
-                () -> chessMatchMock.possibleMoves(new ChessPosition('a', 4)));
+                () -> chessMatchMock.computePossibleMoves(new ChessPosition('a', 4)));
     }
 
     @Test
@@ -88,6 +89,6 @@ class ChessMatchTest {
 
         assertThrowsExactly(
                 ChessException.class,
-                () -> chessMatchMock.possibleMoves(new ChessPosition('a', 4)));
+                () -> chessMatchMock.computePossibleMoves(new ChessPosition('a', 4)));
     }
 }
