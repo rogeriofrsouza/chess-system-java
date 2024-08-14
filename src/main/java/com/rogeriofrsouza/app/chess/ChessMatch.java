@@ -268,21 +268,14 @@ public class ChessMatch {
 
     private boolean testCheck(Color color) {
         Position kingPosition = searchKing(color).getChessPosition().toPosition();
+        Color opponentPlayer = getOpponentPlayer(color);
 
-        List<Piece> opponentPieces =
-                piecesOnTheBoard.stream()
-                        .filter(x -> ((ChessPiece) x).getColor() == getOpponentPlayer(color))
-                        .collect(Collectors.toList());
-
-        for (Piece p : opponentPieces) {
-            boolean[][] mat = p.possibleMoves();
-
-            if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
-                return true;
-            }
-        }
-
-        return false;
+        return piecesOnTheBoard.stream()
+                .filter(piece -> ((ChessPiece) piece).getColor() == opponentPlayer)
+                .anyMatch(piece -> {
+                    boolean[][] possibleMoves = piece.possibleMoves();
+                    return possibleMoves[kingPosition.getRow()][kingPosition.getColumn()];
+                });
     }
 
     private ChessPiece searchKing(Color color) {
