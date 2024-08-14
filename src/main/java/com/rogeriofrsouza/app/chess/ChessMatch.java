@@ -160,11 +160,11 @@ public class ChessMatch {
     }
 
     private Piece makeMove(Position source, Position target) {
-        ChessPiece p = (ChessPiece) board.removePiece(source);
-        p.increaseMoveCount();
+        ChessPiece movingPiece = (ChessPiece) board.removePiece(source);
+        movingPiece.increaseMoveCount();
 
         Piece capturedPiece = board.removePiece(target);
-        board.placePiece(p, target);
+        board.placePiece(movingPiece, target);
 
         if (capturedPiece != null) {
             piecesOnTheBoard.remove(capturedPiece);
@@ -172,7 +172,7 @@ public class ChessMatch {
         }
 
         // Special move: Castling - kingside rook
-        if (p instanceof King && target.getColumn() == source.getColumn() + 2) {
+        if (movingPiece instanceof King && target.getColumn() == source.getColumn() + 2) {
             Position sourceT = new Position(source.getRow(), source.getColumn() + 3);
             Position targetT = new Position(source.getRow(), source.getColumn() + 1);
 
@@ -182,7 +182,7 @@ public class ChessMatch {
         }
 
         // Special move: Castling - queenside rook
-        if (p instanceof King && target.getColumn() == source.getColumn() - 2) {
+        if (movingPiece instanceof King && target.getColumn() == source.getColumn() - 2) {
             Position sourceT = new Position(source.getRow(), source.getColumn() - 4);
             Position targetT = new Position(source.getRow(), source.getColumn() - 1);
 
@@ -192,11 +192,11 @@ public class ChessMatch {
         }
 
         // Special move: En Passant
-        if (p instanceof Pawn) {
+        if (movingPiece instanceof Pawn) {
             if (source.getColumn() != target.getColumn() && capturedPiece == null) {
                 Position pawnPosition;
 
-                if (p.getColor() == Color.WHITE) {
+                if (movingPiece.getColor() == Color.WHITE) {
                     pawnPosition = new Position(target.getRow() + 1, target.getColumn());
                 } else {
                     pawnPosition = new Position(target.getRow() - 1, target.getColumn());
