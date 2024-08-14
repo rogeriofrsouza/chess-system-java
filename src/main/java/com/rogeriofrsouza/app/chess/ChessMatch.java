@@ -106,9 +106,9 @@ public class ChessMatch {
             throw new ChessException("You can't put yourself in check");
         }
 
-        check = (testCheck(opponent(currentPlayer)));
+        check = (testCheck(getOpponentPlayer(currentPlayer)));
 
-        if (testCheckMate(opponent(currentPlayer))) {
+        if (testCheckMate(getOpponentPlayer(currentPlayer))) {
             checkMate = true;
         } else {
             nextTurn();
@@ -263,7 +263,7 @@ public class ChessMatch {
 
     private void nextTurn() {
         turn++;
-        currentPlayer = opponent(currentPlayer);
+        currentPlayer = getOpponentPlayer(currentPlayer);
     }
 
     private boolean testCheck(Color color) {
@@ -271,7 +271,7 @@ public class ChessMatch {
 
         List<Piece> opponentPieces =
                 piecesOnTheBoard.stream()
-                        .filter(x -> ((ChessPiece) x).getColor() == opponent(color))
+                        .filter(x -> ((ChessPiece) x).getColor() == getOpponentPlayer(color))
                         .collect(Collectors.toList());
 
         for (Piece p : opponentPieces) {
@@ -300,8 +300,10 @@ public class ChessMatch {
         throw new IllegalStateException("There is no " + color + " king on the board");
     }
 
-    private Color opponent(Color color) {
-        return (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+    private Color getOpponentPlayer(Color color) {
+        return color == Color.WHITE
+                ? Color.BLACK
+                : Color.WHITE;
     }
 
     private boolean testCheckMate(Color color) {
