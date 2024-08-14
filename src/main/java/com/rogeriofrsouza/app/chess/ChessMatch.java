@@ -212,10 +212,10 @@ public class ChessMatch {
     }
 
     private void undoMove(Position source, Position target, Piece capturedPiece) {
-        ChessPiece p = (ChessPiece) board.removePiece(target);
-        p.decreaseMoveCount();
+        ChessPiece movingPiece = (ChessPiece) board.removePiece(target);
+        movingPiece.decreaseMoveCount();
 
-        board.placePiece(p, source);
+        board.placePiece(movingPiece, source);
 
         if (capturedPiece != null) {
             board.placePiece(capturedPiece, target);
@@ -224,7 +224,7 @@ public class ChessMatch {
         }
 
         // Special move: Castling - kingside rook
-        if (p instanceof King && target.getColumn() == source.getColumn() + 2) {
+        if (movingPiece instanceof King && target.getColumn() == source.getColumn() + 2) {
             Position sourceT = new Position(source.getRow(), source.getColumn() + 3);
             Position targetT = new Position(source.getRow(), source.getColumn() + 1);
 
@@ -234,7 +234,7 @@ public class ChessMatch {
         }
 
         // Special move: Castling - queenside rook
-        if (p instanceof King && target.getColumn() == source.getColumn() - 2) {
+        if (movingPiece instanceof King && target.getColumn() == source.getColumn() - 2) {
             Position sourceT = new Position(source.getRow(), source.getColumn() - 4);
             Position targetT = new Position(source.getRow(), source.getColumn() - 1);
 
@@ -244,13 +244,13 @@ public class ChessMatch {
         }
 
         // Special move: En Passant
-        if (p instanceof Pawn) {
+        if (movingPiece instanceof Pawn) {
             if (source.getColumn() != target.getColumn() && capturedPiece == enPassantVulnerable) {
                 ChessPiece pawn = (ChessPiece) board.removePiece(target);
 
                 Position pawnPosition;
 
-                if (p.getColor() == Color.WHITE) {
+                if (movingPiece.getColor() == Color.WHITE) {
                     pawnPosition = new Position(3, target.getColumn());
                 } else {
                     pawnPosition = new Position(4, target.getColumn());
