@@ -102,11 +102,10 @@ public class ChessMatch {
 
         if (testCheck(currentPlayer)) {
             undoMove(source, target, capturedPiece);
-
             throw new ChessException("You can't put yourself in check");
         }
 
-        check = (testCheck(getOpponentPlayer(currentPlayer)));
+        check = testCheck(getOpponentPlayer(currentPlayer));
 
         if (testCheckMate(getOpponentPlayer(currentPlayer))) {
             checkMate = true;
@@ -298,18 +297,18 @@ public class ChessMatch {
             return false;
         }
 
-        List<Piece> list =
+        List<Piece> piecesFiltered =
                 piecesOnTheBoard.stream()
-                        .filter(x -> ((ChessPiece) x).getColor() == color)
+                        .filter(piece -> ((ChessPiece) piece).getColor() == color)
                         .collect(Collectors.toList());
 
-        for (Piece p : list) {
-            boolean[][] mat = p.possibleMoves();
+        for (Piece piece : piecesFiltered) {
+            boolean[][] possibleMoves = piece.possibleMoves();
 
             for (int i = 0; i < board.getRows(); i++) {
                 for (int j = 0; j < board.getColumns(); j++) {
-                    if (mat[i][j]) {
-                        Position source = ((ChessPiece) p).getChessPosition().toPosition();
+                    if (possibleMoves[i][j]) {
+                        Position source = ((ChessPiece) piece).getChessPosition().toPosition();
                         Position target = new Position(i, j);
 
                         Piece capturedPiece = makeMove(source, target);
