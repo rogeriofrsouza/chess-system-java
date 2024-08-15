@@ -115,24 +115,21 @@ public class ChessMatch {
 
         ChessPiece movedPiece = (ChessPiece) board.piece(target);
 
-        // Special move: Promotion
         promoted = null;
+        enPassantVulnerable = null;
 
         if (movedPiece instanceof Pawn) {
-            if ((movedPiece.getColor() == Color.WHITE && target.getRow() == 0)
-                    || (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
+            // Special move: Promotion
+            if (movedPiece.getColor() == Color.WHITE && target.getRow() == 0
+                    || movedPiece.getColor() == Color.BLACK && target.getRow() == 7) {
                 promoted = movedPiece;
                 promoted = replacePromotedPiece("Q");
             }
-        }
 
-        // Special move: En Passant
-        if (movedPiece instanceof Pawn
-                && (target.getRow() == source.getRow() - 2
-                        || target.getRow() == source.getRow() + 2)) {
-            enPassantVulnerable = movedPiece;
-        } else {
-            enPassantVulnerable = null;
+            // Special move: En Passant
+            if (List.of(source.getRow() - 2, source.getRow() + 2).contains(target.getRow())) {
+                enPassantVulnerable = movedPiece;
+            }
         }
 
         return (ChessPiece) capturedPiece;
