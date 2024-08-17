@@ -4,6 +4,9 @@ import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.boardgame.Piece;
 import com.rogeriofrsouza.app.boardgame.Position;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
 public abstract class ChessPiece extends Piece {
 
     private Color color;

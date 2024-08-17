@@ -1,5 +1,8 @@
 package com.rogeriofrsouza.app.boardgame;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public abstract class Piece {
 
     // Não é ainda a posição do xadrez, é uma posição simples de matriz. Não deve ser visível na
