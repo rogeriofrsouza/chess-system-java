@@ -328,26 +328,24 @@ public class ChessMatch {
             throw new IllegalStateException("There is no piece to be promoted");
         }
 
-        if (!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")) {
+        if (!List.of("B", "N", "R", "Q").contains(type)) {
             return promoted;
         }
 
-        Position pos = promoted.getChessPosition().toPosition();
-        Piece p = board.removePiece(pos);
-        piecesOnTheBoard.remove(p);
+        Position promotedPosition = promoted.getChessPosition().toPosition();
+        Piece promotedPiece = board.removePiece(promotedPosition);
+        piecesOnTheBoard.remove(promotedPiece);
 
-        ChessPiece newPiece = newPiece(type, promoted.getColor());
-        board.placePiece(newPiece, pos);
+        ChessPiece newPiece = switch (type) {
+            case "B" -> new Bishop(board, promoted.getColor());
+            case "N" -> new Knight(board, promoted.getColor());
+            case "R" -> new Rook(board, promoted.getColor());
+            default -> new Queen(board, promoted.getColor());
+        };
+
+        board.placePiece(newPiece, promotedPosition);
         piecesOnTheBoard.add(newPiece);
 
         return newPiece;
-    }
-
-    private ChessPiece newPiece(String type, Color color) {
-        if (type.equals("B")) return new Bishop(board, color);
-        if (type.equals("N")) return new Knight(board, color);
-        if (type.equals("R")) return new Rook(board, color);
-
-        return new Queen(board, color);
     }
 }
