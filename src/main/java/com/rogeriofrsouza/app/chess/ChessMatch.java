@@ -188,20 +188,19 @@ public class ChessMatch {
         }
 
         // Special move: En Passant
-        if (movingPiece instanceof Pawn) {
-            if (source.getColumn() != target.getColumn() && capturedPiece == null) {
-                Position pawnPosition;
+        if (movingPiece instanceof Pawn
+                && source.getColumn() != target.getColumn()
+                && capturedPiece == null) {
+            int targetRow =
+                    movingPiece.getColor() == Color.WHITE
+                            ? target.getRow() + 1
+                            : target.getRow() - 1;
 
-                if (movingPiece.getColor() == Color.WHITE) {
-                    pawnPosition = new Position(target.getRow() + 1, target.getColumn());
-                } else {
-                    pawnPosition = new Position(target.getRow() - 1, target.getColumn());
-                }
+            Position pawnPosition = new Position(targetRow, target.getColumn());
 
-                capturedPiece = board.removePiece(pawnPosition);
-                capturedPieces.add(capturedPiece);
-                piecesOnTheBoard.remove(capturedPiece);
-            }
+            capturedPiece = board.removePiece(pawnPosition);
+            capturedPieces.add(capturedPiece);
+            piecesOnTheBoard.remove(capturedPiece);
         }
 
         return capturedPiece;
@@ -240,20 +239,15 @@ public class ChessMatch {
         }
 
         // Special move: En Passant
-        if (movingPiece instanceof Pawn) {
-            if (source.getColumn() != target.getColumn() && capturedPiece == enPassantVulnerable) {
-                ChessPiece pawn = (ChessPiece) board.removePiece(target);
+        if (movingPiece instanceof Pawn
+                && source.getColumn() != target.getColumn()
+                && capturedPiece == enPassantVulnerable) {
+            ChessPiece pawn = (ChessPiece) board.removePiece(target);
 
-                Position pawnPosition;
+            int targetRow = movingPiece.getColor() == Color.WHITE ? 3 : 4;
+            Position pawnPosition = new Position(targetRow, target.getColumn());
 
-                if (movingPiece.getColor() == Color.WHITE) {
-                    pawnPosition = new Position(3, target.getColumn());
-                } else {
-                    pawnPosition = new Position(4, target.getColumn());
-                }
-
-                board.placePiece(pawn, pawnPosition);
-            }
+            board.placePiece(pawn, pawnPosition);
         }
     }
 
