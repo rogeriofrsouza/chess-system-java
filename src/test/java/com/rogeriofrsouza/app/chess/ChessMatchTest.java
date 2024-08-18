@@ -1,9 +1,12 @@
 package com.rogeriofrsouza.app.chess;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -166,5 +169,32 @@ class ChessMatchTest {
         assertThrowsExactly(
                 IllegalStateException.class,
                 () -> chessMatchMock.replacePromotedPiece("A"));
+    }
+
+    @Test
+    @DisplayName("should return the pieces on the board")
+    void getPieces() {
+        ChessPiece[][] piecesExpected = new ChessPiece[][] {
+                {new Rook(boardMock, Color.BLACK), new Queen(boardMock, Color.BLACK)},
+                {new Rook(boardMock, Color.WHITE), new Queen(boardMock, Color.WHITE)}};
+
+        when(boardMock.getRows()).thenReturn(2);
+        when(boardMock.getColumns()).thenReturn(2);
+
+        when(boardMock.piece(anyInt(), anyInt()))
+                .thenReturn(piecesExpected[0][0])
+                .thenReturn(piecesExpected[0][1])
+                .thenReturn(piecesExpected[1][0])
+                .thenReturn(piecesExpected[1][1]);
+
+        ChessPiece[][] piecesActual = chessMatchMock.getPieces();
+
+        for (int i = 0; i < piecesExpected.length; i++) {
+            assertArrayEquals(piecesExpected[i], piecesActual[i]);
+        }
+
+        verify(boardMock).getRows();
+        verify(boardMock).getColumns();
+        verify(boardMock, times(4)).piece(anyInt(), anyInt());
     }
 }
