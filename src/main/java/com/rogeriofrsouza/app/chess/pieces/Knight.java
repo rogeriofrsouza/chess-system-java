@@ -3,7 +3,6 @@ package com.rogeriofrsouza.app.chess.pieces;
 import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.boardgame.Position;
 import com.rogeriofrsouza.app.chess.ChessPiece;
-import com.rogeriofrsouza.app.chess.Color;
 
 public class Knight extends ChessPiece {
 
