@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+@Getter
 @EqualsAndHashCode(callSuper = true)
 public abstract class ChessPiece extends Piece {
 
@@ -15,20 +16,16 @@ public abstract class ChessPiece extends Piece {
     private Color color;
     private int moveCount;
 
-    public ChessPiece(Board board, Color color) {
+    protected ChessPiece(Board board, Color color) {
         super(board);
         this.color = color;
     }
 
-    public Color getColor() {
-        return color;
+    protected ChessPiece(Board board, Name name, Color color) {
+        super(board);
+        this.name = name;
+        this.color = color;
     }
-
-    public int getMoveCount() {
-        return moveCount;
-    }
-
-    // Não permitir que a cor de uma peça seja modificada. Remover o setColor()
 
     public ChessPosition getChessPosition() {
         return ChessPosition.fromPosition(position);
