@@ -58,4 +58,9 @@ public abstract class ChessPiece extends Piece {
 
         private String letter;
     }
+
+    public enum Color {
+        BLACK,
+        WHITE
+    }
 }
