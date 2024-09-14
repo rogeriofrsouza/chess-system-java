@@ -6,12 +6,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
-import com.rogeriofrsouza.app.boardgame.Board;
-import com.rogeriofrsouza.app.chess.ChessMatch;
-import com.rogeriofrsouza.app.chess.ChessPiece;
-import com.rogeriofrsouza.app.chess.ChessPosition;
-import com.rogeriofrsouza.app.chess.Color;
-import com.rogeriofrsouza.app.chess.pieces.Rook;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,18 +23,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import com.rogeriofrsouza.app.boardgame.Board;
+import com.rogeriofrsouza.app.chess.ChessMatch;
+import com.rogeriofrsouza.app.chess.ChessPiece;
+import com.rogeriofrsouza.app.chess.ChessPosition;
+import com.rogeriofrsouza.app.chess.pieces.Rook;
 
 @ExtendWith(MockitoExtension.class)
 class UITest {
 
-    @InjectMocks @Spy private UI ui;
+    @InjectMocks
+    @Spy
+    private UI ui;
 
     private final PrintStream systemOut = System.out;
     private ByteArrayOutputStream outputStream;
@@ -74,10 +75,10 @@ class UITest {
         Board board = new Board(8, 8);
         List<ChessPiece> captured =
                 List.of(
-                        new Rook(board, Color.WHITE),
-                        new Rook(board, Color.WHITE),
-                        new Rook(board, Color.BLACK),
-                        new Rook(board, Color.BLACK));
+                        new Rook(board, ChessPiece.Color.WHITE),
+                        new Rook(board, ChessPiece.Color.WHITE),
+                        new Rook(board, ChessPiece.Color.BLACK),
+                        new Rook(board, ChessPiece.Color.BLACK));
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
@@ -107,11 +108,12 @@ class UITest {
         ChessMatch chessMatch = new ChessMatch();
         chessMatch.setCheck(true);
         chessMatch.setTurn(50);
-        chessMatch.setCurrentPlayer(Color.BLACK);
+        chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
         Board board = new Board(8, 8);
         List<ChessPiece> captured =
-                List.of(new Rook(board, Color.WHITE), new Rook(board, Color.WHITE));
+                List.of(new Rook(board, ChessPiece.Color.WHITE),
+                        new Rook(board, ChessPiece.Color.WHITE));
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
@@ -142,11 +144,12 @@ class UITest {
         ChessMatch chessMatch = new ChessMatch();
         chessMatch.setCheckMate(true);
         chessMatch.setTurn(10);
-        chessMatch.setCurrentPlayer(Color.BLACK);
+        chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
         Board board = new Board(8, 8);
         List<ChessPiece> captured =
-                List.of(new Rook(board, Color.BLACK), new Rook(board, Color.BLACK));
+                List.of(new Rook(board, ChessPiece.Color.BLACK),
+                        new Rook(board, ChessPiece.Color.BLACK));
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
@@ -177,7 +180,9 @@ class UITest {
 
         ChessPiece[][] pieces =
                 new ChessPiece[][] {
-                    {new Rook(board, Color.BLACK)}, {null}, {null}, {new Rook(board, Color.WHITE)}
+                        {new Rook(board, ChessPiece.Color.BLACK)},
+                        {null}, {null},
+                        {new Rook(board, ChessPiece.Color.WHITE)}
                 };
 
         String stringExpected =
@@ -201,7 +206,9 @@ class UITest {
 
         ChessPiece[][] pieces =
                 new ChessPiece[][] {
-                    {new Rook(board, Color.BLACK)}, {null}, {null}, {new Rook(board, Color.WHITE)}
+                        {new Rook(board, ChessPiece.Color.BLACK)},
+                        {null}, {null},
+                        {new Rook(board, ChessPiece.Color.WHITE)}
                 };
 
         boolean[][] possibleMoves = new boolean[][] {{true}, {true}, {false}, {false}};
@@ -223,8 +230,7 @@ class UITest {
     }
 
     @Test
-    @DisplayName(
-            "should create a ChessPosition object with column and row values provided from input")
+    @DisplayName("should create a ChessPosition object with column and row values provided from input")
     void readChessPosition_validInput_createChessPosition() {
         provideInput("a8");
 
