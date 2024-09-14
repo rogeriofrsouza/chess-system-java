@@ -1,14 +1,13 @@
 package com.rogeriofrsouza.app;
 
-import com.rogeriofrsouza.app.chess.ChessMatch;
-import com.rogeriofrsouza.app.chess.ChessPiece;
-import com.rogeriofrsouza.app.chess.ChessPosition;
-import com.rogeriofrsouza.app.chess.Color;
-
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import com.rogeriofrsouza.app.chess.ChessMatch;
+import com.rogeriofrsouza.app.chess.ChessPiece;
+import com.rogeriofrsouza.app.chess.ChessPosition;
 
 public class UI {
 
@@ -32,12 +31,12 @@ public class UI {
 
         List<ChessPiece> white =
                 captured.stream()
-                        .filter(piece -> piece.getColor() == Color.WHITE)
+                        .filter(piece -> piece.getColor() == ChessPiece.Color.WHITE)
                         .collect(Collectors.toList());
 
         List<ChessPiece> black =
                 captured.stream()
-                        .filter(piece -> piece.getColor() == Color.BLACK)
+                        .filter(piece -> piece.getColor() == ChessPiece.Color.BLACK)
                         .collect(Collectors.toList());
 
         System.out.println("\nCaptured pieces");
@@ -75,7 +74,9 @@ public class UI {
                     stringBuilder.append("-");
                 } else {
                     String color =
-                            pieces[i][j].getColor() == Color.WHITE ? ANSI_WHITE : ANSI_YELLOW;
+                            pieces[i][j].getColor() == ChessPiece.Color.WHITE
+                                    ? ANSI_WHITE
+                                    : ANSI_YELLOW;
                     stringBuilder.append(color + pieces[i][j]);
                 }
 
