@@ -91,7 +91,7 @@ public class ChessMatch {
         Position position = sourcePosition.toPosition();
         validateSourcePosition(position);
 
-        return board.piece(position).possibleMoves();
+        return board.piece(position).computePossibleMoves();
     }
 
     public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
@@ -155,7 +155,7 @@ public class ChessMatch {
     }
 
     private void validateTargetPosition(Position source, Position target) {
-        if (!board.piece(source).possibleMove(target)) {
+        if (!board.piece(source).isTargetPossibleMove(target)) {
             throw new ChessException("The chosen piece can't move to target position");
         }
     }
@@ -268,7 +268,7 @@ public class ChessMatch {
         return piecesOnTheBoard.stream()
                 .filter(piece -> ((ChessPiece) piece).getColor() == opponentPlayer)
                 .anyMatch(piece -> {
-                    boolean[][] possibleMoves = piece.possibleMoves();
+                    boolean[][] possibleMoves = piece.computePossibleMoves();
                     return possibleMoves[kingPosition.getRow()][kingPosition.getColumn()];
                 });
     }
@@ -300,7 +300,7 @@ public class ChessMatch {
                         .collect(Collectors.toList());
 
         for (Piece piece : piecesFiltered) {
-            boolean[][] possibleMoves = piece.possibleMoves();
+            boolean[][] possibleMoves = piece.computePossibleMoves();
 
             for (int i = 0; i < board.getRows(); i++) {
                 for (int j = 0; j < board.getColumns(); j++) {
