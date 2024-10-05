@@ -71,13 +71,13 @@ class ChessMatchTest {
                 .when(boardMock).piece(position);
 
         doReturn(true).when(pieceMock).isThereAnyPossibleMove();
-        doReturn(possibleMovesExpected).when(pieceMock).possibleMoves();
+        doReturn(possibleMovesExpected).when(pieceMock).computePossibleMoves();
 
         assertEquals(
                 possibleMovesExpected,
                 chessMatchMock.computePossibleMoves(chessPosition));
 
-        verify(pieceMock).possibleMoves();
+        verify(pieceMock).computePossibleMoves();
     }
 
     @Test
