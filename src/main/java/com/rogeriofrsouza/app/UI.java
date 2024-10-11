@@ -90,8 +90,18 @@ public class UI {
         System.out.println(stringBuilder.toString());
     }
 
-    public ChessPosition readChessPosition(Scanner scanner) {
+    private String readInput(Scanner scanner) {
         String input = scanner.nextLine();
+
+        if (input == null || input.trim().isBlank()) {
+            throw new InputMismatchException("Error reading input: cannot be null or blank.");
+        }
+
+        return input.trim();
+    }
+
+    public ChessPosition readChessPosition(Scanner scanner) {
+        String input = readInput(scanner);
 
         if (!input.matches("[a-h][1-8]")) {
             throw new InputMismatchException(
@@ -105,7 +115,7 @@ public class UI {
     }
 
     public ChessPiece.Name readPromotedPiece(Scanner scanner) {
-        String input = scanner.nextLine().substring(0, 1);
+        String input = readInput(scanner).substring(0, 1);
 
         return ChessMatch.possiblePromotedPieces
                 .stream()
