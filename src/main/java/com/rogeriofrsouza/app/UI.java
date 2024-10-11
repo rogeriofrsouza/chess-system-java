@@ -103,4 +103,14 @@ public class UI {
 
         return new ChessPosition(column, row);
     }
+
+    public ChessPiece.Name readPromotedPiece(Scanner scanner) {
+        String input = scanner.nextLine().substring(0, 1);
+
+        return ChessMatch.possiblePromotedPieces
+                .stream()
+                .filter(pieceName -> pieceName.getLetter().equalsIgnoreCase(input))
+                .findFirst()
+                .orElse(null);
+    }
 }
