@@ -1,16 +1,16 @@
 package com.rogeriofrsouza.app;
 
-import com.rogeriofrsouza.app.chess.ChessException;
-import com.rogeriofrsouza.app.chess.ChessMatch;
-import com.rogeriofrsouza.app.chess.ChessPiece;
-import com.rogeriofrsouza.app.chess.ChessPosition;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
+
+import com.rogeriofrsouza.app.chess.ChessException;
+import com.rogeriofrsouza.app.chess.ChessMatch;
+import com.rogeriofrsouza.app.chess.ChessPiece;
+import com.rogeriofrsouza.app.chess.ChessPosition;
 
 public class Program {
 
@@ -42,14 +42,14 @@ public class Program {
 
                 if (chessMatch.getPromoted() != null) {
                     System.out.print("Enter piece for promotion (B/N/R/Q): ");
-                    String type = scanner.nextLine().substring(0, 1).toUpperCase();
+                    ChessPiece.Name pieceName = ui.readPromotedPiece(scanner);
 
-                    while (!List.of("B", "N", "R", "Q").contains(type)) {
+                    while (pieceName == null) {
                         System.err.print("Invalid value! Enter piece for promotion (B/N/R/Q): ");
-                        type = scanner.nextLine().substring(0, 1).toUpperCase();
+                        pieceName = ui.readPromotedPiece(scanner);
                     }
 
-                    chessMatch.replacePromotedPiece(type);
+                    chessMatch.replacePromotedPiece(pieceName);
                 }
             } catch (ChessException | InputMismatchException exception) {
                 System.err.println(exception.getMessage());
