@@ -1,20 +1,17 @@
 package com.rogeriofrsouza.app.boardgame;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
+@Getter
 @EqualsAndHashCode
 public abstract class Piece {
 
     protected Position position;
-
-    private Board board;
+    private final Board board;
 
     protected Piece(Board board) {
         this.board = board;
-    }
-
-    protected Board getBoard() {
-        return board;
     }
 
     public abstract boolean[][] computePossibleMoves();
@@ -26,9 +23,9 @@ public abstract class Piece {
     public boolean isThereAnyPossibleMove() {
         boolean[][] possibleMoves = computePossibleMoves();
 
-        for (int i = 0; i < possibleMoves.length; i++) {
-            for (int j = 0; j < possibleMoves[i].length; j++) {
-                if (possibleMoves[i][j]) {
+        for (boolean[] row : possibleMoves) {
+            for (boolean move : row) {
+                if (move) {
                     return true;
                 }
             }
