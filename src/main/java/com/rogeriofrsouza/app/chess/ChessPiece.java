@@ -12,12 +12,13 @@ import lombok.Getter;
 @EqualsAndHashCode(callSuper = true)
 public abstract class ChessPiece extends Piece {
 
-    private Name name;
+    private final Name name;
     private final Color color;
     private int moveCount;
 
     protected ChessPiece(Board board, Color color) {
         super(board);
+        this.name = null;
         this.color = color;
     }
 
