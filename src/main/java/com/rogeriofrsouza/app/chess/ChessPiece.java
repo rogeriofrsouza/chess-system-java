@@ -13,7 +13,7 @@ import lombok.Getter;
 public abstract class ChessPiece extends Piece {
 
     private Name name;
-    private Color color;
+    private final Color color;
     private int moveCount;
 
     protected ChessPiece(Board board, Color color) {
@@ -56,7 +56,7 @@ public abstract class ChessPiece extends Piece {
         KING("K"),
         PAWN("P");
 
-        private String letter;
+        private final String letter;
     }
 
     public enum Color {
