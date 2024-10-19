@@ -3,7 +3,6 @@ package com.rogeriofrsouza.app.chess;
 import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.boardgame.Piece;
 import com.rogeriofrsouza.app.boardgame.Position;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,6 +43,11 @@ public abstract class ChessPiece extends Piece {
 
     protected void decreaseMoveCount() {
         moveCount--;
+    }
+
+    @Override
+    public String toString() {
+        return getName().getLetter();
     }
 
     @AllArgsConstructor
