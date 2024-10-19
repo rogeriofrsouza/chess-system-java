@@ -15,17 +15,7 @@ public class Bishop extends ChessPiece {
         boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
         Position targetPosition = new Position(0, 0);
 
-        // north-west
-        targetPosition.setValues(position.getRow() - 1, position.getColumn() - 1);
-
-        while (getBoard().positionExists(targetPosition) && !getBoard().thereIsAPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-            targetPosition.setValues(targetPosition.getRow() - 1, targetPosition.getColumn() - 1);
-        }
-
-        if (getBoard().positionExists(targetPosition) && isThereOpponentPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-        }
+        northWestMoves(possibleMoves);
 
         // north-east
         targetPosition.setValues(position.getRow() - 1, position.getColumn() + 1);
@@ -64,5 +54,23 @@ public class Bishop extends ChessPiece {
         }
 
         return possibleMoves;
+    }
+
+    private void northWestMoves(boolean[][] possibleMoves) {
+        Position targetPosition = new Position(position.getRow() - 1, position.getColumn() - 1);
+
+        if (!getBoard().positionExists(targetPosition)) {
+            return;
+        }
+
+        if (isThereOpponentPiece(targetPosition)) {
+            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
+            return;
+        }
+
+        while (!getBoard().thereIsAPiece(targetPosition)) {
+            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
+            targetPosition.setValues(targetPosition.getRow() - 1, targetPosition.getColumn() - 1);
+        }
     }
 }
