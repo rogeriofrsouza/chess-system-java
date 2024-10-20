@@ -25,16 +25,21 @@ public class Bishop extends ChessPiece {
 
     private void checkMoves(boolean[][] possibleMoves, ChessMoveDirection direction) {
         Position targetPosition = new Position(position.getRow(), position.getColumn());
-        changeTargetPosition(targetPosition, direction);
 
-        if (getBoard().positionExists(targetPosition) && isThereOpponentPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-            return;
-        }
-
-        while (getBoard().positionExists(targetPosition) && !getBoard().thereIsAPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
+        while (true) {
             changeTargetPosition(targetPosition, direction);
+
+            if (!getBoard().positionExists(targetPosition)) {
+                return;
+            }
+
+            if (getBoard().thereIsAPiece(targetPosition)) {
+                possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] =
+                    isThereOpponentPiece(targetPosition);
+                return;
+            }
+
+            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
         }
     }
 
