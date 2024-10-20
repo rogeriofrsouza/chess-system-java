@@ -2,6 +2,7 @@ package com.rogeriofrsouza.app.chess.pieces;
 
 import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.boardgame.Position;
+import com.rogeriofrsouza.app.chess.ChessMoveDirection;
 import com.rogeriofrsouza.app.chess.ChessPiece;
 
 public class Bishop extends ChessPiece {
@@ -13,64 +14,45 @@ public class Bishop extends ChessPiece {
     @Override
     public boolean[][] computePossibleMoves() {
         boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
-        Position targetPosition = new Position(0, 0);
 
-        northWestMoves(possibleMoves);
-
-        // north-east
-        targetPosition.setValues(position.getRow() - 1, position.getColumn() + 1);
-
-        while (getBoard().positionExists(targetPosition) && !getBoard().thereIsAPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-            targetPosition.setValues(targetPosition.getRow() - 1, targetPosition.getColumn() + 1);
-        }
-
-        if (getBoard().positionExists(targetPosition) && isThereOpponentPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-        }
-
-        // south-east
-        targetPosition.setValues(position.getRow() + 1, position.getColumn() + 1);
-
-        while (getBoard().positionExists(targetPosition) && !getBoard().thereIsAPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-            targetPosition.setValues(targetPosition.getRow() + 1, targetPosition.getColumn() + 1);
-        }
-
-        if (getBoard().positionExists(targetPosition) && isThereOpponentPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-        }
-
-        // south-west
-        targetPosition.setValues(position.getRow() + 1, position.getColumn() - 1);
-
-        while (getBoard().positionExists(targetPosition) && !getBoard().thereIsAPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-            targetPosition.setValues(targetPosition.getRow() + 1, targetPosition.getColumn() - 1);
-        }
-
-        if (getBoard().positionExists(targetPosition) && isThereOpponentPiece(targetPosition)) {
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-        }
+        checkMoves(possibleMoves, ChessMoveDirection.UP_LEFT);
+        checkMoves(possibleMoves, ChessMoveDirection.UP_RIGHT);
+        checkMoves(possibleMoves, ChessMoveDirection.DOWN_LEFT);
+        checkMoves(possibleMoves, ChessMoveDirection.DOWN_RIGHT);
 
         return possibleMoves;
     }
 
-    private void northWestMoves(boolean[][] possibleMoves) {
-        Position targetPosition = new Position(position.getRow() - 1, position.getColumn() - 1);
+    private void checkMoves(boolean[][] possibleMoves, ChessMoveDirection direction) {
+        Position targetPosition = new Position(position.getRow(), position.getColumn());
+        changeTargetPosition(targetPosition, direction);
 
-        if (!getBoard().positionExists(targetPosition)) {
-            return;
-        }
-
-        if (isThereOpponentPiece(targetPosition)) {
+        if (getBoard().positionExists(targetPosition) && isThereOpponentPiece(targetPosition)) {
             possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
             return;
         }
 
-        while (!getBoard().thereIsAPiece(targetPosition)) {
+        while (getBoard().positionExists(targetPosition) && !getBoard().thereIsAPiece(targetPosition)) {
             possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-            targetPosition.setValues(targetPosition.getRow() - 1, targetPosition.getColumn() - 1);
+            changeTargetPosition(targetPosition, direction);
+        }
+    }
+
+    private void changeTargetPosition(Position targetPosition, ChessMoveDirection direction) {
+        switch (direction) {
+            case UP -> targetPosition.setRow(targetPosition.getRow() - 1);
+            case DOWN -> targetPosition.setRow(targetPosition.getRow() + 1);
+            case LEFT -> targetPosition.setColumn(targetPosition.getColumn() - 1);
+            case RIGHT -> targetPosition.setColumn(targetPosition.getColumn() + 1);
+            case UP_LEFT -> targetPosition.setValues(
+                targetPosition.getRow() - 1, targetPosition.getColumn() - 1);
+            case UP_RIGHT -> targetPosition.setValues(
+                targetPosition.getRow() - 1, targetPosition.getColumn() + 1);
+            case DOWN_LEFT -> targetPosition.setValues(
+                targetPosition.getRow() + 1, targetPosition.getColumn() - 1);
+            case DOWN_RIGHT -> targetPosition.setValues(
+                targetPosition.getRow() + 1, targetPosition.getColumn() + 1);
+            default -> throw new IllegalArgumentException("Invalid direction");
         }
     }
 }
