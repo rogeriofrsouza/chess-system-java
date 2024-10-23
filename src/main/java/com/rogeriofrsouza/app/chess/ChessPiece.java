@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @EqualsAndHashCode(callSuper = true)
 public abstract class ChessPiece extends Piece {
@@ -14,6 +16,7 @@ public abstract class ChessPiece extends Piece {
     private final Name name;
     private final Color color;
     private int moveCount;
+    private List<ChessMoveDirection> chessMoveDirections;
 
     protected ChessPiece(Board board, Color color) {
         super(board);
@@ -21,10 +24,12 @@ public abstract class ChessPiece extends Piece {
         this.color = color;
     }
 
-    protected ChessPiece(Board board, Name name, Color color) {
+    protected ChessPiece(
+        Board board, Color color, Name name, List<ChessMoveDirection> chessMoveDirections) {
         super(board);
-        this.name = name;
         this.color = color;
+        this.name = name;
+        this.chessMoveDirections = chessMoveDirections;
     }
 
     public ChessPosition getChessPosition() {
@@ -48,6 +53,19 @@ public abstract class ChessPiece extends Piece {
     @Override
     public String toString() {
         return getName().getLetter();
+    }
+
+    @Override
+    public boolean[][] computePossibleMoves() {
+        boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
+
+        if (chessMoveDirections == null) {
+            return possibleMoves;
+        }
+
+        chessMoveDirections.forEach(direction -> checkMoves(possibleMoves, direction));
+
+        return possibleMoves;
     }
 
     protected void checkMoves(boolean[][] possibleMoves, ChessMoveDirection direction) {
