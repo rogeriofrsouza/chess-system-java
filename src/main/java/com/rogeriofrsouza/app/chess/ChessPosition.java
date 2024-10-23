@@ -27,7 +27,7 @@ public class ChessPosition {
 
     // Não permitir que a coluna e a linha sejam livremente alteradas
 
-    protected Position toPosition() {
+    public Position toPosition() {
         return new Position(8 - row, column - 'a');
     }
 
