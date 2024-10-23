@@ -13,15 +13,6 @@ public class Rook extends ChessPiece {
         ChessMoveDirection.DOWN, ChessMoveDirection.LEFT);
 
     public Rook(Board board, Color color) {
-        super(board, Name.ROOK, color);
-    }
-
-    @Override
-    public boolean[][] computePossibleMoves() {
-        boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
-
-        CHESS_MOVE_DIRECTIONS.forEach(direction -> checkMoves(possibleMoves, direction));
-
-        return possibleMoves;
+        super(board, color, Name.ROOK, CHESS_MOVE_DIRECTIONS);
     }
 }

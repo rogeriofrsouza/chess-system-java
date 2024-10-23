@@ -13,15 +13,6 @@ public class Bishop extends ChessPiece {
         ChessMoveDirection.DOWN_LEFT, ChessMoveDirection.DOWN_RIGHT);
 
     public Bishop(Board board, Color color) {
-        super(board, Name.BISHOP, color);
-    }
-
-    @Override
-    public boolean[][] computePossibleMoves() {
-        boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
-
-        CHESS_MOVE_DIRECTIONS.forEach(direction -> checkMoves(possibleMoves, direction));
-
-        return possibleMoves;
+        super(board, color, Name.BISHOP, CHESS_MOVE_DIRECTIONS);
     }
 }

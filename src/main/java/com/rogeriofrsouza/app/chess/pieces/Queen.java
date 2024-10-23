@@ -15,15 +15,6 @@ public class Queen extends ChessPiece {
         ChessMoveDirection.DOWN_RIGHT, ChessMoveDirection.DOWN_LEFT);
 
     public Queen(Board board, Color color) {
-        super(board, Name.QUEEN, color);
-    }
-
-    @Override
-    public boolean[][] computePossibleMoves() {
-        boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
-
-        CHESS_MOVE_DIRECTIONS.forEach(direction -> checkMoves(possibleMoves, direction));
-
-        return possibleMoves;
+        super(board, color, Name.QUEEN, CHESS_MOVE_DIRECTIONS);
     }
 }
