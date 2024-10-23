@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
@@ -59,11 +60,10 @@ public abstract class ChessPiece extends Piece {
     public boolean[][] computePossibleMoves() {
         boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
 
-        if (chessMoveDirections == null) {
-            return possibleMoves;
-        }
-
-        chessMoveDirections.forEach(direction -> checkMoves(possibleMoves, direction));
+        Optional.ofNullable(getChessMoveDirections())
+            .filter(directions -> !directions.isEmpty())
+            .ifPresent(directions -> directions.forEach(
+                direction -> checkMoves(possibleMoves, direction)));
 
         return possibleMoves;
     }
