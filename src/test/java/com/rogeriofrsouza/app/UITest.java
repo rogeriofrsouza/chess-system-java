@@ -79,8 +79,7 @@ class UITest {
             new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE),
             new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
 
-        String outputExpected = String.format(
-            "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s",
+        String outputExpected = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
             UI.ANSI_WHITE,
             captured.subList(0, 2),
             UI.ANSI_RESET,
@@ -109,8 +108,7 @@ class UITest {
         List<ChessPiece> captured = List.of(
             new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
 
-        String outputExpected = String.format(
-            "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s",
+        String outputExpected = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
             UI.ANSI_WHITE,
             captured,
             UI.ANSI_RESET,
@@ -140,8 +138,7 @@ class UITest {
         List<ChessPiece> captured = List.of(
             new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
 
-        String stringBuilder = String.format(
-            "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s",
+        String stringBuilder = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
             UI.ANSI_WHITE,
             List.of(),
             UI.ANSI_RESET,
@@ -169,8 +166,7 @@ class UITest {
             {new Rook(board, ChessPiece.Color.WHITE)}
         };
 
-        String stringExpected = String.format(
-            "8 %sR%s %n7 -%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n",
+        String stringExpected = "8 %sR%s %n7 -%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
             UI.ANSI_YELLOW, UI.ANSI_RESET, UI.ANSI_RESET,
             UI.ANSI_RESET, UI.ANSI_WHITE, UI.ANSI_RESET);
 
@@ -191,8 +187,7 @@ class UITest {
 
         boolean[][] possibleMoves = new boolean[][]{{true}, {true}, {false}, {false}};
 
-        String stringExpected = String.format(
-            "8 %s%sR%s %n7 %s-%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n",
+        String stringExpected = "8 %s%sR%s %n7 %s-%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
             UI.ANSI_BLUE_BACKGROUND, UI.ANSI_YELLOW, UI.ANSI_RESET,
             UI.ANSI_BLUE_BACKGROUND, UI.ANSI_RESET, UI.ANSI_RESET,
             UI.ANSI_WHITE, UI.ANSI_RESET);

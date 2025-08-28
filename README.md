@@ -27,7 +27,7 @@ Currently only supported on Linux 🐧
 
 ## How to run
 
-Requirements: JDK 17+
+Requirements: JDK 21
 
 ```sh
 git clone https://github.com/rogeriofrsouza/chess-system-java.git
