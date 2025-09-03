@@ -8,21 +8,12 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.rogeriofrsouza.app.ui.AnsiEscapeCode.*;
+
 public class UI {
 
-    // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_WHITE = "\u001B[37m";
-    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
-
-    // https://gist.github.com/ConnerWill/d4b6c776b509add763e17f9f113fd25b
-    public static final String ANSI_MOVE_CURSOR_HOME = "\033[H";
-    public static final String ANSI_CLEAR_SCREEN = "\033[2J";
-
-    // https://stackoverflow.com/questions/2979383/java-clear-the-console
     public void clearScreen() {
-        System.out.print(ANSI_MOVE_CURSOR_HOME + ANSI_CLEAR_SCREEN);
+        System.out.printf("%s%s", ANSI_MOVE_CURSOR_HOME, ANSI_CLEAR_SCREEN);
     }
 
     public void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
@@ -70,8 +61,8 @@ public class UI {
                     stringBuilder.append("-");
                 } else {
                     String color = pieces[i][j].getColor() == ChessPiece.Color.WHITE
-                        ? ANSI_WHITE
-                        : ANSI_YELLOW;
+                        ? ANSI_WHITE.getValue()
+                        : ANSI_YELLOW.getValue();
                     stringBuilder.append(color).append(pieces[i][j]);
                 }
 
