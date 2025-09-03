@@ -1,19 +1,10 @@
 package com.rogeriofrsouza.app;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
-
+import com.rogeriofrsouza.app.boardgame.Board;
+import com.rogeriofrsouza.app.chess.ChessMatch;
+import com.rogeriofrsouza.app.chess.ChessPiece;
+import com.rogeriofrsouza.app.chess.ChessPosition;
+import com.rogeriofrsouza.app.chess.pieces.Rook;
 import com.rogeriofrsouza.app.ui.UI;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,11 +17,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.rogeriofrsouza.app.boardgame.Board;
-import com.rogeriofrsouza.app.chess.ChessMatch;
-import com.rogeriofrsouza.app.chess.ChessPiece;
-import com.rogeriofrsouza.app.chess.ChessPosition;
-import com.rogeriofrsouza.app.chess.pieces.Rook;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+
+import static com.rogeriofrsouza.app.ui.AnsiEscapeCode.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class UITest {
@@ -66,7 +66,7 @@ class UITest {
     @DisplayName("should clear the console")
     void clearScreen() {
         ui.clearScreen();
-        String expected = UI.ANSI_MOVE_CURSOR_HOME + UI.ANSI_CLEAR_SCREEN;
+        String expected = "%s%s".formatted(MOVE_CURSOR_HOME, CLEAR_SCREEN);
         assertEquals(expected, outputStream.toString());
     }
 
@@ -81,12 +81,12 @@ class UITest {
             new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
 
         String outputExpected = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
-            UI.ANSI_WHITE,
+            WHITE,
             captured.subList(0, 2),
-            UI.ANSI_RESET,
-            UI.ANSI_YELLOW,
+            RESET,
+            YELLOW,
             captured.subList(2, 4),
-            UI.ANSI_RESET) +
+            RESET) +
             "\nTurn: " + chessMatch.getTurn() + "\n" +
             "Waiting player: " + chessMatch.getCurrentPlayer() + "\n";
 
@@ -110,12 +110,12 @@ class UITest {
             new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
 
         String outputExpected = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
-            UI.ANSI_WHITE,
+            WHITE,
             captured,
-            UI.ANSI_RESET,
-            UI.ANSI_YELLOW,
+            RESET,
+            YELLOW,
             List.of(),
-            UI.ANSI_RESET) +
+            RESET) +
             "\nTurn: " + chessMatch.getTurn() + "\n" +
             "Waiting player: " + chessMatch.getCurrentPlayer() + "\n" +
             "CHECK!\n";
@@ -140,12 +140,12 @@ class UITest {
             new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
 
         String stringBuilder = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
-            UI.ANSI_WHITE,
+            WHITE,
             List.of(),
-            UI.ANSI_RESET,
-            UI.ANSI_YELLOW,
+            RESET,
+            YELLOW,
             captured,
-            UI.ANSI_RESET) +
+            RESET) +
             "\nTurn: " + chessMatch.getTurn() + "\n" +
             "CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer() + "\n";
 
@@ -168,8 +168,8 @@ class UITest {
         };
 
         String stringExpected = "8 %sR%s %n7 -%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
-            UI.ANSI_YELLOW, UI.ANSI_RESET, UI.ANSI_RESET,
-            UI.ANSI_RESET, UI.ANSI_WHITE, UI.ANSI_RESET);
+            YELLOW, RESET, RESET,
+            RESET, WHITE, RESET);
 
         ui.printBoard(pieces, null);
         assertEquals(stringExpected, outputStream.toString());
@@ -189,9 +189,9 @@ class UITest {
         boolean[][] possibleMoves = new boolean[][]{{true}, {true}, {false}, {false}};
 
         String stringExpected = "8 %s%sR%s %n7 %s-%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
-            UI.ANSI_BLUE_BACKGROUND, UI.ANSI_YELLOW, UI.ANSI_RESET,
-            UI.ANSI_BLUE_BACKGROUND, UI.ANSI_RESET, UI.ANSI_RESET,
-            UI.ANSI_WHITE, UI.ANSI_RESET);
+            BLUE_BACKGROUND, YELLOW, RESET,
+            BLUE_BACKGROUND, RESET, RESET,
+            WHITE, RESET);
 
         ui.printBoard(pieces, possibleMoves);
         assertEquals(stringExpected, outputStream.toString());
