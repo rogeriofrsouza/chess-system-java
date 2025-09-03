@@ -13,7 +13,7 @@ import static com.rogeriofrsouza.app.ui.AnsiEscapeCode.*;
 public class UI {
 
     public void clearScreen() {
-        System.out.printf("%s%s", ANSI_MOVE_CURSOR_HOME, ANSI_CLEAR_SCREEN);
+        System.out.printf("%s%s", MOVE_CURSOR_HOME, CLEAR_SCREEN);
     }
 
     public void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
@@ -30,7 +30,7 @@ public class UI {
         System.out.println("\nCaptured pieces");
 
         System.out.printf("White: %s%s%n%sBlack: %s%s%n%s",
-            ANSI_WHITE, white, ANSI_RESET, ANSI_YELLOW, black, ANSI_RESET);
+                WHITE, white, RESET, YELLOW, black, RESET);
 
         System.out.println("\nTurn: " + chessMatch.getTurn());
 
@@ -54,19 +54,19 @@ public class UI {
 
             for (int j = 0; j < pieces[i].length; j++) {
                 if (possibleMoves != null && possibleMoves[i][j]) {
-                    stringBuilder.append(ANSI_BLUE_BACKGROUND);
+                    stringBuilder.append(BLUE_BACKGROUND);
                 }
 
                 if (pieces[i][j] == null) {
                     stringBuilder.append("-");
                 } else {
                     String color = pieces[i][j].getColor() == ChessPiece.Color.WHITE
-                        ? ANSI_WHITE.getValue()
-                        : ANSI_YELLOW.getValue();
+                        ? WHITE.getValue()
+                        : YELLOW.getValue();
                     stringBuilder.append(color).append(pieces[i][j]);
                 }
 
-                stringBuilder.append(ANSI_RESET + " ");
+                stringBuilder.append(RESET + " ");
             }
 
             stringBuilder.append("\n");
