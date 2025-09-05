@@ -7,6 +7,7 @@ import com.rogeriofrsouza.app.chess.ChessPosition;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 import static com.rogeriofrsouza.app.ui.AnsiEscapeCode.*;
 
@@ -49,10 +50,10 @@ public class UI {
     public void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (int i = 0; i < pieces.length; i++) {
+        IntStream.range(0, pieces.length).forEach(i -> {
             stringBuilder.append((8 - i)).append(" ");
 
-            for (int j = 0; j < pieces[i].length; j++) {
+            IntStream.range(0, pieces[i].length).forEach(j -> {
                 if (possibleMoves != null && possibleMoves[i][j]) {
                     stringBuilder.append(BLUE_BACKGROUND);
                 }
@@ -61,16 +62,17 @@ public class UI {
                     stringBuilder.append("-");
                 } else {
                     String color = pieces[i][j].getColor() == ChessPiece.Color.WHITE
-                        ? WHITE.getValue()
-                        : YELLOW.getValue();
+                            ? WHITE.getValue()
+                            : YELLOW.getValue();
+
                     stringBuilder.append(color).append(pieces[i][j]);
                 }
 
                 stringBuilder.append(RESET).append(" ");
-            }
+            });
 
             stringBuilder.append("\n");
-        }
+        });
 
         stringBuilder.append("  a b c d e f g h");
         System.out.println(stringBuilder);
