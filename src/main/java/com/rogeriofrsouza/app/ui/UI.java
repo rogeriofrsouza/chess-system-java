@@ -66,7 +66,7 @@ public class UI {
                     stringBuilder.append(color).append(pieces[i][j]);
                 }
 
-                stringBuilder.append(RESET + " ");
+                stringBuilder.append(RESET).append(" ");
             }
 
             stringBuilder.append("\n");
