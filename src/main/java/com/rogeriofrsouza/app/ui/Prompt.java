@@ -37,12 +37,20 @@ public class Prompt {
     }
 
     public ChessPiece.Name readPromotedPiece() {
-        String input = readInput();
+        while (true) {
+            System.out.print("Enter piece for promotion (B/N/R/Q): ");
 
-        return ChessMatch.possiblePromotedPieces
-                .stream()
-                .filter(n -> n.getLetter().equalsIgnoreCase(input))
-                .findFirst()
-                .orElse(null);
+            try {
+                String input = readInput();
+
+                return ChessMatch.possiblePromotedPieces
+                        .stream()
+                        .filter(n -> n.getLetter().equalsIgnoreCase(input))
+                        .findFirst()
+                        .orElseThrow(() -> new InputMismatchException("Invalid piece"));
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }
