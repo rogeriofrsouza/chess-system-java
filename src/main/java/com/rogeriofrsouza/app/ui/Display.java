@@ -46,6 +46,7 @@ public class Display {
     }
 
     public void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
+        clearScreen();
         StringBuilder stringBuilder = new StringBuilder();
 
         IntStream.range(0, pieces.length).forEach(i -> {
