@@ -12,7 +12,6 @@ public class Board {
     private final int columns;
 
     private final BoardSquare[][] squares;
-    private final Piece[][] pieces;
 
     public Board() {
         this.rows = 8;
@@ -21,8 +20,6 @@ public class Board {
         squares = new BoardSquare[rows][columns];
         IntStream.range(0, rows)
                 .forEach(r -> Arrays.setAll(squares[r], c -> new BoardSquare(new Position(r, c))));
-
-        pieces = new Piece[rows][columns];
     }
 
     public Piece piece(int row, int column) {
@@ -30,7 +27,7 @@ public class Board {
             throw new BoardException("Position not on the board");
         }
 
-        return pieces[row][column];
+        return squares[row][column].getPiece();
     }
 
     public Piece piece(Position position) {
@@ -38,7 +35,7 @@ public class Board {
             throw new BoardException("Position not on the board");
         }
 
-        return pieces[position.getRow()][position.getColumn()];
+        return squares[position.getRow()][position.getColumn()].getPiece();
     }
 
     public void placePiece(Piece piece, Position position) {
@@ -46,7 +43,7 @@ public class Board {
             throw new BoardException("There is already a piece on position " + position);
         }
 
-        pieces[position.getRow()][position.getColumn()] = piece;
+        squares[position.getRow()][position.getColumn()].setPiece(piece);
         piece.position = position;
     }
 
@@ -62,7 +59,7 @@ public class Board {
         Piece aux = piece(position);
         aux.position = null; // Peça retirada do tabuleiro, não possui posição
 
-        pieces[position.getRow()][position.getColumn()] = null;
+        squares[position.getRow()][position.getColumn()].setPiece(null);
 
         return aux;
     }
