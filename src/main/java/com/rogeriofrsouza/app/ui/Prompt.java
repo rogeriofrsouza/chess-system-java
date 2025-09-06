@@ -17,7 +17,7 @@ public class Prompt {
         String input = scanner.nextLine();
 
         if (input == null || input.trim().isBlank()) {
-            throw new InputMismatchException("Error reading input: cannot be null or blank.");
+            throw new InputMismatchException("Input cannot be null or blank");
         }
 
         return input.trim();
