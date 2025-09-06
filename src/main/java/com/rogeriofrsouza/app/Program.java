@@ -1,17 +1,12 @@
 package com.rogeriofrsouza.app;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Scanner;
-
 import com.rogeriofrsouza.app.chess.ChessException;
 import com.rogeriofrsouza.app.chess.ChessMatch;
 import com.rogeriofrsouza.app.chess.ChessPiece;
 import com.rogeriofrsouza.app.chess.ChessPosition;
 import com.rogeriofrsouza.app.ui.UI;
+
+import java.util.*;
 
 public class Program {
 
@@ -28,14 +23,14 @@ public class Program {
                 ui.clearScreen();
                 ui.printMatch(chessMatch, captured);
 
-                System.out.print("\nSource: ");
+                System.out.print("Source: ");
                 ChessPosition source = ui.readChessPosition(scanner);
                 boolean[][] possibleMoves = chessMatch.computePossibleMoves(source);
 
                 ui.clearScreen();
                 ui.printBoard(chessMatch.getPieces(), possibleMoves);
 
-                System.out.print("\nTarget: ");
+                System.out.print("Target: ");
                 ChessPosition target = ui.readChessPosition(scanner);
 
                 Optional.ofNullable(chessMatch.performChessMove(source, target))
