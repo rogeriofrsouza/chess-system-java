@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 
 import static com.rogeriofrsouza.app.ui.AnsiEscapeCode.*;
 
-public class UI {
+public class Display {
 
     public void clearScreen() {
         System.out.printf("%s%s", MOVE_CURSOR_HOME, CLEAR_SCREEN);
