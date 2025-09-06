@@ -2,10 +2,10 @@ package com.rogeriofrsouza.app.boardgame;
 
 public class Board {
 
-    private int rows;
-    private int columns;
+    private final int rows;
+    private final int columns;
 
-    private Piece[][] pieces;
+    private final Piece[][] pieces;
 
     public Board() {
         this.rows = 8;
