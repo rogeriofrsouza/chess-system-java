@@ -6,6 +6,7 @@ import com.rogeriofrsouza.app.chess.ChessPosition;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -61,10 +62,7 @@ public class UI {
                 if (pieces[i][j] == null) {
                     stringBuilder.append("-");
                 } else {
-                    String color = pieces[i][j].getColor() == ChessPiece.Color.WHITE
-                            ? WHITE.getValue()
-                            : YELLOW.getValue();
-
+                    String color = getPieceAnsiColor(pieces[i][j]);
                     stringBuilder.append(color).append(pieces[i][j]);
                 }
 
@@ -110,5 +108,12 @@ public class UI {
             .filter(pieceName -> pieceName.getLetter().equalsIgnoreCase(input))
             .findFirst()
             .orElse(null);
+    }
+
+    private String getPieceAnsiColor(ChessPiece piece) {
+        Objects.requireNonNull(piece, "ChessPiece cannot be null");
+        ChessPiece.Color color = piece.getColor();
+
+        return color == ChessPiece.Color.WHITE ? WHITE.getValue() : YELLOW.getValue();
     }
 }
