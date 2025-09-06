@@ -37,11 +37,11 @@ public class Prompt {
     }
 
     public ChessPiece.Name readPromotedPiece() {
-        String input = readInput().substring(0, 1);
+        String input = readInput();
 
         return ChessMatch.possiblePromotedPieces
                 .stream()
-                .filter(pieceName -> pieceName.getLetter().equalsIgnoreCase(input))
+                .filter(n -> n.getLetter().equalsIgnoreCase(input))
                 .findFirst()
                 .orElse(null);
     }
