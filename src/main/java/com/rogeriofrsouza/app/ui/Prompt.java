@@ -26,9 +26,8 @@ public class Prompt {
     public ChessPosition readChessPosition() {
         String input = readInput();
 
-        if (!input.matches("[a-h][1-8]")) {
-            throw new InputMismatchException(
-                    "Error reading ChessPosition. Valid values are from a1 to h8.");
+        if (input.length() < 2) {
+            throw new InputMismatchException("Expected two characters");
         }
 
         char column = input.charAt(0);
