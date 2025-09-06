@@ -1,21 +1,15 @@
 package com.rogeriofrsouza.app.chess;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.boardgame.Piece;
 import com.rogeriofrsouza.app.boardgame.Position;
-import com.rogeriofrsouza.app.chess.pieces.Bishop;
-import com.rogeriofrsouza.app.chess.pieces.King;
-import com.rogeriofrsouza.app.chess.pieces.Knight;
-import com.rogeriofrsouza.app.chess.pieces.Pawn;
-import com.rogeriofrsouza.app.chess.pieces.Queen;
-import com.rogeriofrsouza.app.chess.pieces.Rook;
-
+import com.rogeriofrsouza.app.chess.pieces.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -39,7 +33,7 @@ public class ChessMatch {
                     ChessPiece.Name.ROOK, ChessPiece.Name.QUEEN);
 
     public ChessMatch() {
-        board = new Board(8, 8);
+        board = new Board();
         turn = 1;
         currentPlayer = ChessPiece.Color.WHITE;
 

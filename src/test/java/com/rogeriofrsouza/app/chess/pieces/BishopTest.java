@@ -18,7 +18,7 @@ class BishopTest {
     @Test
     @DisplayName("possible moves for a Bishop given specific board setup")
     void computePossibleMoves() {
-        Board board = new Board(8, 8);
+        Board board = new Board();
         Bishop bishop = new Bishop(board, ChessPiece.Color.WHITE);
         Rook rook = new Rook(board, ChessPiece.Color.WHITE);
         Knight knight = new Knight(board, ChessPiece.Color.BLACK);

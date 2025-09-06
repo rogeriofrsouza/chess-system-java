@@ -68,7 +68,7 @@ class DisplayTest {
     void printMatch_notCheckNotCheckmate_logMatch() {
         ChessMatch chessMatch = new ChessMatch();
 
-        Board board = new Board(8, 8);
+        Board board = new Board();
         List<ChessPiece> captured = List.of(
             new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE),
             new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
@@ -98,7 +98,7 @@ class DisplayTest {
         chessMatch.setTurn(50);
         chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
-        Board board = new Board(8, 8);
+        Board board = new Board();
         List<ChessPiece> captured = List.of(
             new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
 
@@ -128,7 +128,7 @@ class DisplayTest {
         chessMatch.setTurn(10);
         chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
-        Board board = new Board(8, 8);
+        Board board = new Board();
         List<ChessPiece> captured = List.of(
             new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
 
@@ -152,7 +152,7 @@ class DisplayTest {
     @Test
     @DisplayName("should print the board, pieces and its corresponding colors")
     void printBoard_noPossibleMove_printBoardPiecesColors() {
-        Board board = new Board(4, 1);
+        Board board = new Board();
 
         ChessPiece[][] pieces = new ChessPiece[][]{
             {new Rook(board, ChessPiece.Color.BLACK)},
@@ -172,7 +172,7 @@ class DisplayTest {
     @Test
     @DisplayName("should print the board, pieces, its corresponding colors and possibleMoves")
     void printBoard_hasPossibleMoves_printBoardPiecesColorsMoves() {
-        Board board = new Board(4, 1);
+        Board board = new Board();
 
         ChessPiece[][] pieces = new ChessPiece[][]{
                 {new Rook(board, ChessPiece.Color.BLACK)},

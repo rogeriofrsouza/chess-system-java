@@ -62,7 +62,7 @@ class ChessMatchTest {
         ChessPosition chessPosition = new ChessPosition('a', 4);
         Position position = new Position(4, 0);
 
-        Rook chessPiece = new Rook(new Board(3, 3), ChessPiece.Color.WHITE);
+        Rook chessPiece = new Rook(new Board(), ChessPiece.Color.WHITE);
         boolean[][] possibleMovesExpected = new boolean[][] {{true, true, false}};
 
         doReturn(true).when(boardMock).thereIsAPiece(position);
@@ -85,7 +85,7 @@ class ChessMatchTest {
     void possibleMoves_noPossibleMoves_throwChessException() {
         ChessPosition chessPosition = new ChessPosition('a', 4);
         Position position = new Position(4, 0);
-        Rook chessPiece = new Rook(new Board(3, 3), ChessPiece.Color.WHITE);
+        Rook chessPiece = new Rook(new Board(), ChessPiece.Color.WHITE);
 
         doReturn(true).when(boardMock).thereIsAPiece(position);
         doReturn(chessPiece).doReturn(pieceMock).when(boardMock).piece(position);
@@ -101,7 +101,7 @@ class ChessMatchTest {
     void possibleMoves_chosenPieceNotYours_throwChessException() {
         ChessPosition chessPosition = new ChessPosition('a', 4);
         Position position = new Position(4, 0);
-        Rook chessPiece = new Rook(new Board(3, 3), ChessPiece.Color.BLACK);
+        Rook chessPiece = new Rook(new Board(), ChessPiece.Color.BLACK);
 
         doReturn(true).when(boardMock).thereIsAPiece(position);
         doReturn(chessPiece).when(boardMock).piece(position);
