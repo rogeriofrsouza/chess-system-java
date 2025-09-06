@@ -2,17 +2,25 @@ package com.rogeriofrsouza.app.boardgame;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 @Getter
 public class Board {
 
     private final int rows;
     private final int columns;
 
+    private final BoardSquare[][] squares;
     private final Piece[][] pieces;
 
     public Board() {
         this.rows = 8;
         this.columns = 8;
+
+        squares = new BoardSquare[rows][columns];
+        IntStream.range(0, rows)
+                .forEach(r -> Arrays.setAll(squares[r], c -> new BoardSquare(new Position(r, c))));
 
         pieces = new Piece[rows][columns];
     }
