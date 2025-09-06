@@ -39,7 +39,7 @@ public class Program {
                     ChessPiece.Name pieceName = prompt.readPromotedPiece();
                     chessMatch.replacePromotedPiece(pieceName);
                 }
-            } catch (ChessException | InputMismatchException exception) {
+            } catch (ChessException | InputMismatchException | IllegalArgumentException exception) {
                 System.err.println(exception.getMessage());
                 scanner.nextLine();
             }
