@@ -1,5 +1,8 @@
 package com.rogeriofrsouza.app.boardgame;
 
+import lombok.Getter;
+
+@Getter
 public class Board {
 
     private final int rows;
@@ -13,16 +16,6 @@ public class Board {
 
         pieces = new Piece[rows][columns];
     }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public int getColumns() {
-        return columns;
-    }
-
-    // Não permitir alterar a quantidade de linhas e colunas. Remover setRows() e setColumns()
 
     public Piece piece(int row, int column) {
         if (!positionExists(row, column)) {
