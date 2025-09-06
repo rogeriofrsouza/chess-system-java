@@ -160,9 +160,10 @@ class DisplayTest {
             {new Rook(board, ChessPiece.Color.WHITE)}
         };
 
-        String stringExpected = "8 %sR%s %n7 -%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
-            YELLOW, RESET, RESET,
-            RESET, WHITE, RESET);
+        String stringExpected = "%s%s8 %sR%s %n7 -%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
+                MOVE_CURSOR_HOME, CLEAR_SCREEN,
+                YELLOW, RESET, RESET,
+                RESET, WHITE, RESET);
 
         display.printBoard(pieces, null);
         assertEquals(stringExpected, outputStream.toString());
@@ -174,17 +175,18 @@ class DisplayTest {
         Board board = new Board(4, 1);
 
         ChessPiece[][] pieces = new ChessPiece[][]{
-            {new Rook(board, ChessPiece.Color.BLACK)},
-            {null}, {null},
-            {new Rook(board, ChessPiece.Color.WHITE)}
+                {new Rook(board, ChessPiece.Color.BLACK)},
+                {null}, {null},
+                {new Rook(board, ChessPiece.Color.WHITE)}
         };
 
         boolean[][] possibleMoves = new boolean[][]{{true}, {true}, {false}, {false}};
 
-        String stringExpected = "8 %s%sR%s %n7 %s-%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
-            BLUE_BACKGROUND, YELLOW, RESET,
-            BLUE_BACKGROUND, RESET, RESET,
-            WHITE, RESET);
+        String stringExpected = "%s%s8 %s%sR%s %n7 %s-%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
+                MOVE_CURSOR_HOME, CLEAR_SCREEN,
+                BLUE_BACKGROUND, YELLOW, RESET,
+                BLUE_BACKGROUND, RESET, RESET,
+                WHITE, RESET);
 
         display.printBoard(pieces, possibleMoves);
         assertEquals(stringExpected, outputStream.toString());
