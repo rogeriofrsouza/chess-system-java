@@ -3,6 +3,8 @@ package com.rogeriofrsouza.app.boardgame;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 @Getter
@@ -78,5 +80,13 @@ public class Board {
         }
 
         return piece(position) != null;
+    }
+
+    public List<Piece> getPiecesOnTheBoard() {
+        return Arrays.stream(squares)
+                .flatMap(Arrays::stream)
+                .map(BoardSquare::getPiece)
+                .filter(Objects::nonNull)
+                .toList();
     }
 }
