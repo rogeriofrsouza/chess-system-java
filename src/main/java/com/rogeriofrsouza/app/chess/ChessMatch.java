@@ -24,7 +24,6 @@ public class ChessMatch {
 
     private Board board;
 
-    private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
 
     public static final List<ChessPiece.Name> possiblePromotedPieces =
@@ -164,7 +163,6 @@ public class ChessMatch {
         board.placePiece(movingPiece, target);
 
         if (capturedPiece != null) {
-            piecesOnTheBoard.remove(capturedPiece);
             capturedPieces.add(capturedPiece);
         }
 
@@ -201,7 +199,6 @@ public class ChessMatch {
 
             capturedPiece = board.removePiece(pawnPosition);
             capturedPieces.add(capturedPiece);
-            piecesOnTheBoard.remove(capturedPiece);
         }
 
         return capturedPiece;
@@ -215,7 +212,6 @@ public class ChessMatch {
 
         if (capturedPiece != null) {
             board.placePiece(capturedPiece, target);
-            piecesOnTheBoard.add(capturedPiece);
             capturedPieces.remove(capturedPiece);
         }
 
@@ -261,7 +257,8 @@ public class ChessMatch {
         Position kingPosition = searchKing(color).getChessPosition().toPosition();
         ChessPiece.Color opponentPlayer = getOpponentPlayer(color);
 
-        return piecesOnTheBoard.stream()
+        return board.getPiecesOnTheBoard()
+                .stream()
                 .filter(piece -> ((ChessPiece) piece).getColor() == opponentPlayer)
                 .anyMatch(piece -> {
                     boolean[][] possibleMoves = piece.computePossibleMoves();
@@ -270,7 +267,8 @@ public class ChessMatch {
     }
 
     private ChessPiece searchKing(ChessPiece.Color color) {
-        return piecesOnTheBoard.stream()
+        return board.getPiecesOnTheBoard()
+                .stream()
                 .filter(piece -> piece instanceof King
                         && ((ChessPiece) piece).getColor() == color)
                 .findFirst()
@@ -291,7 +289,8 @@ public class ChessMatch {
         }
 
         List<Piece> piecesFiltered =
-                piecesOnTheBoard.stream()
+                board.getPiecesOnTheBoard()
+                        .stream()
                         .filter(piece -> ((ChessPiece) piece).getColor() == color)
                         .collect(Collectors.toList());
 
@@ -333,8 +332,7 @@ public class ChessMatch {
         }
 
         Position promotedPosition = promoted.getChessPosition().toPosition();
-        Piece promotedPiece = board.removePiece(promotedPosition);
-        piecesOnTheBoard.remove(promotedPiece);
+        board.removePiece(promotedPosition);
 
         ChessPiece newPiece = switch (type) {
             case "B" -> new Bishop(board, promoted.getColor());
@@ -344,7 +342,6 @@ public class ChessMatch {
         };
 
         board.placePiece(newPiece, promotedPosition);
-        piecesOnTheBoard.add(newPiece);
 
         return newPiece;
     }
