@@ -41,34 +41,31 @@ public class ChessMatch {
     }
 
     private void initialSetup() {
-        ChessPiece.Color color = ChessPiece.Color.BLACK;
-
-        for (int row : new int[] {8, 7, 2, 1}) {
-            if (row <= 2) {
-                color = ChessPiece.Color.WHITE;
-            }
-
-            for (char column = 'a'; column < 'i'; column++) {
-                ChessPiece piece =
-                        (row == 7 || row == 2)
-                                ? new Pawn(board, color, this)
-                                : switchPiece(column, board, color);
-
-                board.placePiece(piece, new ChessPosition(column, row).toPosition());
-                piecesOnTheBoard.add(piece);
-            }
-        }
+        placeBackRank(ChessPiece.Color.BLACK);
+        placePawnRank(ChessPiece.Color.BLACK);
+        placePawnRank(ChessPiece.Color.WHITE);
+        placeBackRank(ChessPiece.Color.WHITE);
     }
 
-    private ChessPiece switchPiece(char column, Board board, ChessPiece.Color color) {
-        return switch (column) {
-            case 'a', 'h' -> new Rook(board, color);
-            case 'b', 'g' -> new Knight(board, color);
-            case 'c', 'f' -> new Bishop(board, color);
-            case 'd' -> new Queen(board, color);
-            case 'e' -> new King(board, color, this);
-            default -> throw new IllegalStateException("Column not supported.");
-        };
+    private void placeBackRank(ChessPiece.Color color) {
+        int row = (color == ChessPiece.Color.WHITE) ? 1 : 8;
+
+        board.placePiece(new Rook(board, color), new ChessPosition('a', row).toPosition());
+        board.placePiece(new Knight(board, color), new ChessPosition('b', row).toPosition());
+        board.placePiece(new Bishop(board, color), new ChessPosition('c', row).toPosition());
+        board.placePiece(new Queen(board, color), new ChessPosition('d', row).toPosition());
+        board.placePiece(new King(board, color, this), new ChessPosition('e', row).toPosition());
+        board.placePiece(new Bishop(board, color), new ChessPosition('f', row).toPosition());
+        board.placePiece(new Knight(board, color), new ChessPosition('g', row).toPosition());
+        board.placePiece(new Rook(board, color), new ChessPosition('h', row).toPosition());
+    }
+
+    private void placePawnRank(ChessPiece.Color color) {
+        int row = (color == ChessPiece.Color.WHITE) ? 2 : 7;
+
+        for (char column = 'a'; column <= 'h'; column++) {
+            board.placePiece(new Pawn(board, color, this), new ChessPosition(column, row).toPosition());
+        }
     }
 
     public ChessPiece[][] getPieces() {
