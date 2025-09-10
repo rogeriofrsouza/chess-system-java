@@ -64,10 +64,8 @@ public abstract class ChessPiece extends Piece {
     public boolean[][] computePossibleMoves() {
         boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
 
-        Optional.ofNullable(getChessMoveDirections())
-            .filter(directions -> !directions.isEmpty())
-            .ifPresent(directions -> directions.forEach(
-                direction -> checkMoves(possibleMoves, direction)));
+        getChessMoveDirections()
+                .forEach(direction -> checkMoves(possibleMoves, direction));
 
         return possibleMoves;
     }
