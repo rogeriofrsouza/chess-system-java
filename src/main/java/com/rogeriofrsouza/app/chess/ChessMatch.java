@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -292,19 +291,15 @@ public class ChessMatch {
             return false;
         }
 
-        List<Piece> piecesFiltered =
-                board.getPiecesOnTheBoard()
-                        .stream()
-                        .filter(piece -> ((ChessPiece) piece).getColor() == color)
-                        .collect(Collectors.toList());
+        List<ChessPiece> piecesFiltered = getPiecesByColor(color);
 
-        for (Piece piece : piecesFiltered) {
+        for (ChessPiece piece : piecesFiltered) {
             boolean[][] possibleMoves = piece.computePossibleMoves();
 
             for (int i = 0; i < board.getRows(); i++) {
                 for (int j = 0; j < board.getColumns(); j++) {
                     if (possibleMoves[i][j]) {
-                        Position source = ((ChessPiece) piece).getChessPosition().toPosition();
+                        Position source = piece.getChessPosition().toPosition();
                         Position target = new Position(i, j);
 
                         Piece capturedPiece = makeMove(source, target);
