@@ -89,4 +89,8 @@ public class Board {
                 .filter(Objects::nonNull)
                 .toList();
     }
+
+    public void makeSquarePossibleMove(Position position) {
+        squares[position.getRow()][position.getColumn()].setPossibleMove(true);
+    }
 }
