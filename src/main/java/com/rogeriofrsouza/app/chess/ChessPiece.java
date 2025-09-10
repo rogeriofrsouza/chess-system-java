@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
@@ -64,30 +63,22 @@ public abstract class ChessPiece extends Piece {
     public boolean[][] computePossibleMoves() {
         boolean[][] possibleMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
 
-        getChessMoveDirections()
-                .forEach(direction -> checkMoves(possibleMoves, direction));
+        for (ChessMoveDirection direction : getChessMoveDirections()) {
+            Position targetPosition = new Position(position.getRow(), position.getColumn());
+
+            while (true) {
+                changeTargetPosition(targetPosition, direction);
+
+                if (!getBoard().positionExists(targetPosition) ||
+                        (getBoard().thereIsAPiece(targetPosition) && !isThereOpponentPiece(targetPosition))) {
+                    break;
+                }
+
+                possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
+            }
+        }
 
         return possibleMoves;
-    }
-
-    protected void checkMoves(boolean[][] possibleMoves, ChessMoveDirection direction) {
-        Position targetPosition = new Position(position.getRow(), position.getColumn());
-
-        while (true) {
-            changeTargetPosition(targetPosition, direction);
-
-            if (!getBoard().positionExists(targetPosition)) {
-                return;
-            }
-
-            if (getBoard().thereIsAPiece(targetPosition)) {
-                possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] =
-                    isThereOpponentPiece(targetPosition);
-                return;
-            }
-
-            possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
-        }
     }
 
     private void changeTargetPosition(Position targetPosition, ChessMoveDirection direction) {
