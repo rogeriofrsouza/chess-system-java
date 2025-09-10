@@ -30,6 +30,10 @@ public abstract class ChessPiece extends Piece {
         super(board);
         this.color = color;
         this.name = name;
+
+        if (chessMoveDirections == null || chessMoveDirections.isEmpty()) {
+            throw new IllegalArgumentException("Invalid chess move directions");
+        }
         this.chessMoveDirections = chessMoveDirections;
     }
 
