@@ -1,11 +1,13 @@
 package com.rogeriofrsouza.app.ui;
 
+import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.chess.ChessMatch;
 import com.rogeriofrsouza.app.chess.ChessPiece;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.rogeriofrsouza.app.ui.AnsiEscapeCode.*;
 
@@ -16,7 +18,7 @@ public class Display {
     }
 
     public void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
-        printBoard(chessMatch.getPieces(), null);
+        printBoard(chessMatch.getBoard());
 
         List<ChessPiece> white = captured.stream()
             .filter(piece -> piece.getColor() == ChessPiece.Color.WHITE)
@@ -45,23 +47,26 @@ public class Display {
         }
     }
 
-    public void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
+    public void printBoard(Board board) {
         clearScreen();
+
         StringBuilder stringBuilder = new StringBuilder();
+        var rowCount = new AtomicInteger();
 
-        IntStream.range(0, pieces.length).forEach(i -> {
-            stringBuilder.append((8 - i)).append(" ");
+        Arrays.stream(board.getSquares()).forEach(row -> {
+            stringBuilder.append(8 - rowCount.getAndIncrement()).append(" ");
 
-            IntStream.range(0, pieces[i].length).forEach(j -> {
-                if (possibleMoves != null && possibleMoves[i][j]) {
+            Arrays.stream(row).forEach(square -> {
+                if (square.isPossibleMove()) {
                     stringBuilder.append(BLUE_BACKGROUND);
                 }
 
-                if (pieces[i][j] == null) {
+                ChessPiece piece = (ChessPiece) square.getPiece();
+                if (piece == null) {
                     stringBuilder.append("-");
                 } else {
-                    String color = getPieceAnsiColor(pieces[i][j]);
-                    stringBuilder.append(color).append(pieces[i][j]);
+                    String color = getPieceAnsiColor(piece);
+                    stringBuilder.append(color).append(piece);
                 }
 
                 stringBuilder.append(RESET).append(" ");
