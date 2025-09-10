@@ -257,9 +257,8 @@ public class ChessMatch {
         Position kingPosition = searchKing(color).getChessPosition().toPosition();
         ChessPiece.Color opponentPlayer = getOpponentPlayer(color);
 
-        return board.getPiecesOnTheBoard()
+        return getPiecesByColor(opponentPlayer)
                 .stream()
-                .filter(piece -> ((ChessPiece) piece).getColor() == opponentPlayer)
                 .anyMatch(piece -> {
                     boolean[][] possibleMoves = piece.computePossibleMoves();
                     return possibleMoves[kingPosition.getRow()][kingPosition.getColumn()];
@@ -267,14 +266,19 @@ public class ChessMatch {
     }
 
     private ChessPiece searchKing(ChessPiece.Color color) {
+        return getPiecesByColor(color)
+                .stream()
+                .filter(King.class::isInstance)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("There is no " + color + " king on the board"));
+    }
+
+    private List<ChessPiece> getPiecesByColor(ChessPiece.Color color) {
         return board.getPiecesOnTheBoard()
                 .stream()
-                .filter(piece -> piece instanceof King
-                        && ((ChessPiece) piece).getColor() == color)
-                .findFirst()
                 .map(ChessPiece.class::cast)
-                .orElseThrow(() -> new IllegalStateException(
-                        "There is no " + color + " king on the board"));
+                .filter(p -> p.getColor() == color)
+                .toList();
     }
 
     private ChessPiece.Color getOpponentPlayer(ChessPiece.Color color) {
