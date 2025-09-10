@@ -25,52 +25,52 @@ public class Knight extends ChessPiece {
         p.setValues(position.getRow() - 2, position.getColumn() - 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         p.setValues(position.getRow() - 2, position.getColumn() + 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // below
         p.setValues(position.getRow() + 2, position.getColumn() - 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         p.setValues(position.getRow() + 2, position.getColumn() + 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // left
         p.setValues(position.getRow() - 1, position.getColumn() - 2);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         p.setValues(position.getRow() + 1, position.getColumn() - 2);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // right
         p.setValues(position.getRow() - 1, position.getColumn() + 2);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         p.setValues(position.getRow() + 1, position.getColumn() + 2);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         return mat;

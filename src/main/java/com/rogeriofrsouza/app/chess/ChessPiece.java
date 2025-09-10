@@ -74,7 +74,7 @@ public abstract class ChessPiece extends Piece {
                     break;
                 }
 
-                possibleMoves[targetPosition.getRow()][targetPosition.getColumn()] = true;
+                getBoard().makeSquarePossibleMove(targetPosition);
             }
         }
 

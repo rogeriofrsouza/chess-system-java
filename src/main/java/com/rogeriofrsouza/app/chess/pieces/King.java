@@ -29,56 +29,56 @@ public class King extends ChessPiece {
         p.setValues(position.getRow() - 1, position.getColumn());
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // below
         p.setValues(position.getRow() + 1, position.getColumn());
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // left
         p.setValues(position.getRow(), position.getColumn() - 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // right
         p.setValues(position.getRow(), position.getColumn() + 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // north-west
         p.setValues(position.getRow() - 1, position.getColumn() - 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // north-east
         p.setValues(position.getRow() - 1, position.getColumn() + 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // south-west
         p.setValues(position.getRow() + 1, position.getColumn() - 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // south-east
         p.setValues(position.getRow() + 1, position.getColumn() + 1);
 
         if (getBoard().positionExists(p) && canMove(p)) {
-            mat[p.getRow()][p.getColumn()] = true;
+            getBoard().makeSquarePossibleMove(p);
         }
 
         // Special move: Castling
@@ -92,7 +92,8 @@ public class King extends ChessPiece {
                 Position p2 = new Position(position.getRow(), position.getColumn() + 2);
 
                 if (getBoard().piece(p1) == null && getBoard().piece(p2) == null) {
-                    mat[position.getRow()][position.getColumn() + 2] = true;
+                    p.setValues(position.getRow(), position.getColumn() + 2);
+                    getBoard().makeSquarePossibleMove(p);
                 }
             }
 
@@ -107,7 +108,8 @@ public class King extends ChessPiece {
                 if (getBoard().piece(p1) == null
                         && getBoard().piece(p2) == null
                         && getBoard().piece(p3) == null) {
-                    mat[position.getRow()][position.getColumn() - 2] = true;
+                    p.setValues(position.getRow(), position.getColumn() - 2);
+                    getBoard().makeSquarePossibleMove(p);
                 }
             }
         }
