@@ -21,6 +21,7 @@ public class Program {
 
         do {
             try {
+                chessMatch.getBoard().resetPossibleMoves();
                 display.printMatch(chessMatch, captured);
 
                 System.out.print("Source: ");
