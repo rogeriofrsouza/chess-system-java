@@ -3,6 +3,8 @@ package com.rogeriofrsouza.app.boardgame;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 @EqualsAndHashCode
 public abstract class Piece {
@@ -17,20 +19,12 @@ public abstract class Piece {
     public abstract boolean[][] computePossibleMoves();
 
     public boolean isTargetPossibleMove(Position target) {
-        return computePossibleMoves()[target.getRow()][target.getColumn()];
+        return getBoard().getSquares()[target.getRow()][target.getColumn()].isPossibleMove();
     }
 
     public boolean isThereAnyPossibleMove() {
-        boolean[][] possibleMoves = computePossibleMoves();
-
-        for (boolean[] row : possibleMoves) {
-            for (boolean move : row) {
-                if (move) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return Arrays.stream(getBoard().getSquares())
+                .flatMap(Arrays::stream)
+                .anyMatch(BoardSquare::isPossibleMove);
     }
 }
