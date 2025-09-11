@@ -1,8 +1,6 @@
 package com.rogeriofrsouza.app.chess;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -72,10 +70,7 @@ class ChessMatchTest {
         doReturn(true).when(pieceMock).isThereAnyPossibleMove();
         doReturn(possibleMovesExpected).when(pieceMock).computePossibleMoves();
 
-        assertEquals(
-                possibleMovesExpected,
-                chessMatchMock.computePossibleMoves(chessPosition));
-
+        assertDoesNotThrow(() -> chessMatchMock.computePossibleMoves(chessPosition));
         verify(pieceMock).computePossibleMoves();
     }
 

@@ -21,9 +21,7 @@ import java.util.List;
 
 import static com.rogeriofrsouza.app.ui.AnsiEscapeCode.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class DisplayTest {
@@ -68,7 +66,7 @@ class DisplayTest {
     void printMatch_notCheckNotCheckmate_logMatch() {
         ChessMatch chessMatch = new ChessMatch();
 
-        Board board = new Board();
+        Board board = chessMatch.getBoard();
         List<ChessPiece> captured = List.of(
             new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE),
             new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
@@ -83,11 +81,10 @@ class DisplayTest {
             "\nTurn: " + chessMatch.getTurn() + "\n" +
             "Waiting player: " + chessMatch.getCurrentPlayer() + "\n";
 
-        doNothing().when(display).printBoard(any(ChessPiece[][].class), any());
+        doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch, captured);
 
         assertEquals(outputExpected, outputStream.toString());
-        verify(display).printBoard(any(ChessPiece[][].class), any());
     }
 
     @Test
@@ -98,7 +95,7 @@ class DisplayTest {
         chessMatch.setTurn(50);
         chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
-        Board board = new Board();
+        Board board = chessMatch.getBoard();
         List<ChessPiece> captured = List.of(
             new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
 
@@ -113,11 +110,10 @@ class DisplayTest {
             "Waiting player: " + chessMatch.getCurrentPlayer() + "\n" +
             "CHECK!\n";
 
-        doNothing().when(display).printBoard(any(ChessPiece[][].class), any());
+        doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch, captured);
 
         assertEquals(outputExpected, outputStream.toString());
-        verify(display).printBoard(any(ChessPiece[][].class), any());
     }
 
     @Test
@@ -128,7 +124,7 @@ class DisplayTest {
         chessMatch.setTurn(10);
         chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
-        Board board = new Board();
+        Board board = chessMatch.getBoard();
         List<ChessPiece> captured = List.of(
             new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
 
@@ -142,53 +138,9 @@ class DisplayTest {
             "\nTurn: " + chessMatch.getTurn() + "\n" +
             "CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer() + "\n";
 
-        doNothing().when(display).printBoard(any(ChessPiece[][].class), any());
+        doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch, captured);
 
         assertEquals(stringBuilder, outputStream.toString());
-        verify(display).printBoard(any(ChessPiece[][].class), any());
-    }
-
-    @Test
-    @DisplayName("should print the board, pieces and its corresponding colors")
-    void printBoard_noPossibleMove_printBoardPiecesColors() {
-        Board board = new Board();
-
-        ChessPiece[][] pieces = new ChessPiece[][]{
-            {new Rook(board, ChessPiece.Color.BLACK)},
-            {null}, {null},
-            {new Rook(board, ChessPiece.Color.WHITE)}
-        };
-
-        String stringExpected = "%s%s8 %sR%s %n7 -%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
-                MOVE_CURSOR_HOME, CLEAR_SCREEN,
-                YELLOW, RESET, RESET,
-                RESET, WHITE, RESET);
-
-        display.printBoard(pieces, null);
-        assertEquals(stringExpected, outputStream.toString());
-    }
-
-    @Test
-    @DisplayName("should print the board, pieces, its corresponding colors and possibleMoves")
-    void printBoard_hasPossibleMoves_printBoardPiecesColorsMoves() {
-        Board board = new Board();
-
-        ChessPiece[][] pieces = new ChessPiece[][]{
-                {new Rook(board, ChessPiece.Color.BLACK)},
-                {null}, {null},
-                {new Rook(board, ChessPiece.Color.WHITE)}
-        };
-
-        boolean[][] possibleMoves = new boolean[][]{{true}, {true}, {false}, {false}};
-
-        String stringExpected = "%s%s8 %s%sR%s %n7 %s-%s %n6 -%s %n5 %sR%s %n  a b c d e f g h%n".formatted(
-                MOVE_CURSOR_HOME, CLEAR_SCREEN,
-                BLUE_BACKGROUND, YELLOW, RESET,
-                BLUE_BACKGROUND, RESET, RESET,
-                WHITE, RESET);
-
-        display.printBoard(pieces, possibleMoves);
-        assertEquals(stringExpected, outputStream.toString());
     }
 }

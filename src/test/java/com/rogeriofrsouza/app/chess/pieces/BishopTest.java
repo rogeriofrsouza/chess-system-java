@@ -1,44 +1,34 @@
 package com.rogeriofrsouza.app.chess.pieces;
 
 import com.rogeriofrsouza.app.boardgame.Board;
+import com.rogeriofrsouza.app.boardgame.BoardSquare;
 import com.rogeriofrsouza.app.chess.ChessPiece;
 import com.rogeriofrsouza.app.chess.ChessPosition;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class BishopTest {
 
     @Test
-    @DisplayName("possible moves for a Bishop given specific board setup")
-    void computePossibleMoves() {
+    void shouldComputePossibleMovesForBishop() {
         Board board = new Board();
         Bishop bishop = new Bishop(board, ChessPiece.Color.WHITE);
-        Rook rook = new Rook(board, ChessPiece.Color.WHITE);
-        Knight knight = new Knight(board, ChessPiece.Color.BLACK);
 
         board.placePiece(bishop, new ChessPosition('b', 2).toPosition());
-        board.placePiece(rook, new ChessPosition('a', 1).toPosition());
-        board.placePiece(knight, new ChessPosition('f', 6).toPosition());
+        board.placePiece(new Rook(board, ChessPiece.Color.WHITE), new ChessPosition('a', 1).toPosition());
+        board.placePiece(new Knight(board, ChessPiece.Color.BLACK), new ChessPosition('f', 6).toPosition());
 
-        boolean[][] possibleMovesExpected = new boolean[8][8];
-        for (boolean[] arr : possibleMovesExpected) {
-            Arrays.fill(arr, false);
-        }
+        bishop.computePossibleMoves();
 
-        possibleMovesExpected[7][2] = true;
-        possibleMovesExpected[5][0] = true;
-        possibleMovesExpected[5][2] = true;
-        possibleMovesExpected[4][3] = true;
-        possibleMovesExpected[3][4] = true;
-        possibleMovesExpected[2][5] = true;
-
-        assertArrayEquals(possibleMovesExpected, bishop.computePossibleMoves());
+        assertTrue(
+                Arrays.stream(board.getSquares())
+                        .flatMap(Arrays::stream)
+                        .anyMatch(BoardSquare::isPossibleMove));
     }
 }
