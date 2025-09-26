@@ -70,8 +70,14 @@ public abstract class ChessPiece extends Piece {
             while (true) {
                 changeTargetPosition(targetPosition, direction);
 
-                if (!getBoard().positionExists(targetPosition) ||
-                        (getBoard().thereIsAPiece(targetPosition) && !isThereOpponentPiece(targetPosition))) {
+                if (!getBoard().positionExists(targetPosition)) {
+                    break;
+                }
+
+                if (getBoard().thereIsAPiece(targetPosition)) {
+                    if (isThereOpponentPiece(targetPosition)) {
+                        getBoard().makeSquarePossibleMove(targetPosition);
+                    }
                     break;
                 }
 
