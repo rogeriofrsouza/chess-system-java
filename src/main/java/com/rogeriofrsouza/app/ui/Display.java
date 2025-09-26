@@ -20,31 +20,36 @@ public class Display {
     public void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
         printBoard(chessMatch.getBoard());
 
+        var stringBuilder = new StringBuilder();
+        stringBuilder.append("\nCaptured pieces");
+
         List<ChessPiece> white = captured.stream()
-            .filter(piece -> piece.getColor() == ChessPiece.Color.WHITE)
-            .toList();
+                .filter(piece -> piece.getColor() == ChessPiece.Color.WHITE)
+                .toList();
+
+        stringBuilder.append("%nWhite: %s%s%s".formatted(WHITE, white, RESET));
 
         List<ChessPiece> black = captured.stream()
-            .filter(piece -> piece.getColor() == ChessPiece.Color.BLACK)
-            .toList();
+                .filter(piece -> piece.getColor() == ChessPiece.Color.BLACK)
+                .toList();
 
-        System.out.println("\nCaptured pieces");
+        stringBuilder.append("%nBlack: %s%s%s".formatted(YELLOW, black, RESET));
 
-        System.out.printf("White: %s%s%n%sBlack: %s%s%n%s",
-                WHITE, white, RESET, YELLOW, black, RESET);
-
-        System.out.println("\nTurn: " + chessMatch.getTurn());
+        stringBuilder.append("\nTurn: ").append(chessMatch.getTurn());
 
         if (chessMatch.isCheckMate()) {
-            System.out.println("CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer());
+            stringBuilder.append("\nCHECKMATE!\nWinner: ").append(chessMatch.getCurrentPlayer());
+            System.out.println(stringBuilder);
             return;
         }
 
-        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+        stringBuilder.append("\nWaiting player: ").append(chessMatch.getCurrentPlayer());
 
         if (chessMatch.isCheck()) {
-            System.out.println("CHECK!");
+            stringBuilder.append("\nCHECK!");
         }
+
+        System.out.println(stringBuilder);
     }
 
     public void printBoard(Board board) {
