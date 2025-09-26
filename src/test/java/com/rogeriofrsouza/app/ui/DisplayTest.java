@@ -68,18 +68,18 @@ class DisplayTest {
 
         Board board = chessMatch.getBoard();
         List<ChessPiece> captured = List.of(
-            new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE),
-            new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
+                new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE),
+                new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
 
-        String outputExpected = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
-            WHITE,
-            captured.subList(0, 2),
-            RESET,
-            YELLOW,
-            captured.subList(2, 4),
-            RESET) +
-            "\nTurn: " + chessMatch.getTurn() + "\n" +
-            "Waiting player: " + chessMatch.getCurrentPlayer() + "\n";
+        String outputExpected = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
+                YELLOW,
+                captured.subList(2, 4),
+                RESET,
+                WHITE,
+                captured.subList(0, 2),
+                RESET) +
+                "Turn: " + chessMatch.getTurn() + "\n" +
+                "Waiting player: " + chessMatch.getCurrentPlayer() + "\n";
 
         doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch, captured);
@@ -97,18 +97,18 @@ class DisplayTest {
 
         Board board = chessMatch.getBoard();
         List<ChessPiece> captured = List.of(
-            new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
+                new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
 
-        String outputExpected = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
-            WHITE,
-            captured,
-            RESET,
-            YELLOW,
-            List.of(),
-            RESET) +
-            "\nTurn: " + chessMatch.getTurn() + "\n" +
-            "Waiting player: " + chessMatch.getCurrentPlayer() + "\n" +
-            "CHECK!\n";
+        String outputExpected = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
+                YELLOW,
+                List.of(),
+                RESET,
+                WHITE,
+                captured,
+                RESET) +
+                "Turn: " + chessMatch.getTurn() + "\n" +
+                "Waiting player: " + chessMatch.getCurrentPlayer() + "\n" +
+                "CHECK!\n";
 
         doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch, captured);
@@ -126,17 +126,17 @@ class DisplayTest {
 
         Board board = chessMatch.getBoard();
         List<ChessPiece> captured = List.of(
-            new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
+                new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
 
-        String stringBuilder = "%nCaptured pieces%nWhite: %s%s%n%sBlack: %s%s%n%s".formatted(
-            WHITE,
-            List.of(),
-            RESET,
-            YELLOW,
-            captured,
-            RESET) +
-            "\nTurn: " + chessMatch.getTurn() + "\n" +
-            "CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer() + "\n";
+        String stringBuilder = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
+                YELLOW,
+                captured,
+                RESET,
+                WHITE,
+                List.of(),
+                RESET) +
+                "Turn: " + chessMatch.getTurn() + "\n" +
+                "CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer() + "\n";
 
         doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch, captured);
