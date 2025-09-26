@@ -6,6 +6,7 @@ import com.rogeriofrsouza.app.boardgame.Position;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -113,8 +114,13 @@ public abstract class ChessPiece extends Piece {
         private final String letter;
     }
 
+    @RequiredArgsConstructor
+    @Getter
     public enum Color {
-        BLACK,
-        WHITE
+
+        BLACK("Black"),
+        WHITE("White");
+
+        private final String value;
     }
 }
