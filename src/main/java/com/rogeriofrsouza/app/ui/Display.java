@@ -21,7 +21,7 @@ public class Display {
         printBoard(chessMatch.getBoard());
 
         var stringBuilder = new StringBuilder();
-        stringBuilder.append("\nCaptured pieces");
+        stringBuilder.append("Captured pieces");
 
         List<ChessPiece> white = captured.stream()
                 .filter(piece -> piece.getColor() == ChessPiece.Color.WHITE)
@@ -80,7 +80,7 @@ public class Display {
             stringBuilder.append("\n");
         });
 
-        stringBuilder.append("  a b c d e f g h");
+        stringBuilder.append("  a b c d e f g h\n");
         System.out.println(stringBuilder);
     }
 
