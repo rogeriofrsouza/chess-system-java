@@ -3,6 +3,7 @@ package com.rogeriofrsouza.app.ui;
 import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.chess.ChessMatch;
 import com.rogeriofrsouza.app.chess.ChessPiece;
+import lombok.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -88,6 +89,10 @@ public class Display {
         Objects.requireNonNull(piece, "ChessPiece cannot be null");
         ChessPiece.Color color = piece.getColor();
 
+        return getColorAnsiCode(color);
+    }
+
+    private String getColorAnsiCode(@NonNull ChessPiece.Color color) {
         return color == ChessPiece.Color.WHITE ? WHITE.getValue() : YELLOW.getValue();
     }
 }
