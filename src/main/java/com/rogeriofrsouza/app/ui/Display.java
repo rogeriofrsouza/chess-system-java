@@ -24,17 +24,7 @@ public class Display {
         var stringBuilder = new StringBuilder();
         stringBuilder.append("Captured pieces");
 
-        List<ChessPiece> white = captured.stream()
-                .filter(piece -> piece.getColor() == ChessPiece.Color.WHITE)
-                .toList();
-
-        stringBuilder.append("%nWhite: %s%s%s".formatted(WHITE, white, RESET));
-
-        List<ChessPiece> black = captured.stream()
-                .filter(piece -> piece.getColor() == ChessPiece.Color.BLACK)
-                .toList();
-
-        stringBuilder.append("%nBlack: %s%s%s".formatted(YELLOW, black, RESET));
+        formatCapturedPieces(captured, stringBuilder);
 
         stringBuilder.append("\nTurn: ").append(chessMatch.getTurn());
 
@@ -51,6 +41,19 @@ public class Display {
         }
 
         System.out.println(stringBuilder);
+    }
+
+    private void formatCapturedPieces(List<ChessPiece> captured, StringBuilder stringBuilder) {
+        Arrays.stream(ChessPiece.Color.values())
+                .map(color -> {
+                    List<ChessPiece> pieces = captured.stream()
+                            .filter(p -> p.getColor() == color)
+                            .toList();
+
+                    return "%n%s: %s%s%s".formatted(
+                            color.getValue(), getColorAnsiCode(color), pieces, RESET);
+                })
+                .forEach(stringBuilder::append);
     }
 
     public void printBoard(Board board) {
