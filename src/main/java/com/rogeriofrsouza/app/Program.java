@@ -21,7 +21,6 @@ public class Program {
 
         do {
             try {
-                chessMatch.getBoard().resetPossibleMoves();
                 display.printMatch(chessMatch, captured);
 
                 System.out.print("Source: ");
@@ -44,6 +43,8 @@ public class Program {
                 System.err.println(exception.getMessage());
                 scanner.nextLine();
             }
+
+            chessMatch.getBoard().resetPossibleMoves();
         } while (!chessMatch.isCheckMate());
 
         display.printMatch(chessMatch, captured);
