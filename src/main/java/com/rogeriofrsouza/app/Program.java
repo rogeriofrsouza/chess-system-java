@@ -32,8 +32,7 @@ public class Program {
                 System.out.print("Target: ");
                 ChessPosition target = prompt.readChessPosition();
 
-                Optional.ofNullable(chessMatch.performChessMove(source, target))
-                        .ifPresent(captured::add);
+                chessMatch.performChessMove(source, target);
 
                 if (chessMatch.getPromoted() != null) {
                     ChessPiece.Name pieceName = prompt.readPromotedPiece();

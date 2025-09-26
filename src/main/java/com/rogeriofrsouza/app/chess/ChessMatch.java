@@ -93,7 +93,7 @@ public class ChessMatch {
         }
     }
 
-    public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
+    public void performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
         Position source = sourcePosition.toPosition();
         Position target = targetPosition.toPosition();
 
@@ -134,8 +134,6 @@ public class ChessMatch {
                 enPassantVulnerable = movedPiece;
             }
         }
-
-        return (ChessPiece) capturedPiece;
     }
 
     private void validateSourcePosition(Position position) {
