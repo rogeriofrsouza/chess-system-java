@@ -50,7 +50,7 @@ public class Display {
     public void printBoard(Board board) {
         clearScreen();
 
-        StringBuilder stringBuilder = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         var rowCount = new AtomicInteger();
 
         Arrays.stream(board.getSquares()).forEach(row -> {
@@ -61,7 +61,7 @@ public class Display {
                     stringBuilder.append(BLUE_BACKGROUND);
                 }
 
-                ChessPiece piece = (ChessPiece) square.getPiece();
+                var piece = (ChessPiece) square.getPiece();
                 if (piece == null) {
                     stringBuilder.append("-");
                 } else {
