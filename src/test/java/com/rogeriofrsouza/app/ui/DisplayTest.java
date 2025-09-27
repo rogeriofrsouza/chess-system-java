@@ -1,6 +1,7 @@
 package com.rogeriofrsouza.app.ui;
 
 import com.rogeriofrsouza.app.boardgame.Board;
+import com.rogeriofrsouza.app.boardgame.Piece;
 import com.rogeriofrsouza.app.chess.ChessMatch;
 import com.rogeriofrsouza.app.chess.ChessPiece;
 import com.rogeriofrsouza.app.chess.pieces.Rook;
@@ -67,9 +68,10 @@ class DisplayTest {
         ChessMatch chessMatch = new ChessMatch();
 
         Board board = chessMatch.getBoard();
-        List<ChessPiece> captured = List.of(
+        List<Piece> captured = List.of(
                 new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE),
                 new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
+        chessMatch.setCapturedPieces(captured);
 
         String outputExpected = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
                 YELLOW,
@@ -82,7 +84,7 @@ class DisplayTest {
                 "Waiting player: " + chessMatch.getCurrentPlayer() + "\n";
 
         doNothing().when(display).printBoard(board);
-        display.printMatch(chessMatch, captured);
+        display.printMatch(chessMatch);
 
         assertEquals(outputExpected, outputStream.toString());
     }
@@ -96,8 +98,9 @@ class DisplayTest {
         chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
         Board board = chessMatch.getBoard();
-        List<ChessPiece> captured = List.of(
+        List<Piece> captured = List.of(
                 new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
+        chessMatch.setCapturedPieces(captured);
 
         String outputExpected = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
                 YELLOW,
@@ -111,7 +114,7 @@ class DisplayTest {
                 "CHECK!\n";
 
         doNothing().when(display).printBoard(board);
-        display.printMatch(chessMatch, captured);
+        display.printMatch(chessMatch);
 
         assertEquals(outputExpected, outputStream.toString());
     }
@@ -125,8 +128,9 @@ class DisplayTest {
         chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
         Board board = chessMatch.getBoard();
-        List<ChessPiece> captured = List.of(
+        List<Piece> captured = List.of(
                 new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
+        chessMatch.setCapturedPieces(captured);
 
         String stringBuilder = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
                 YELLOW,
@@ -139,7 +143,7 @@ class DisplayTest {
                 "CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer() + "\n";
 
         doNothing().when(display).printBoard(board);
-        display.printMatch(chessMatch, captured);
+        display.printMatch(chessMatch);
 
         assertEquals(stringBuilder, outputStream.toString());
     }
