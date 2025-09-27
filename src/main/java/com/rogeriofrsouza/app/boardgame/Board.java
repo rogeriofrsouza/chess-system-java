@@ -24,14 +24,6 @@ public class Board {
                 .forEach(r -> Arrays.setAll(squares[r], c -> new BoardSquare(new Position(r, c))));
     }
 
-    public Piece piece(int row, int column) {
-        if (!positionExists(row, column)) {
-            throw new BoardException("Position not on the board");
-        }
-
-        return squares[row][column].getPiece();
-    }
-
     public Piece piece(Position position) {
         if (!positionExists(position)) {
             throw new BoardException("Position not on the board");
