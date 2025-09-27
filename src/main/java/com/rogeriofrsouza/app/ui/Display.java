@@ -24,7 +24,7 @@ public class Display {
         var stringBuilder = new StringBuilder();
         stringBuilder.append("Captured pieces");
 
-        formatCapturedPieces(captured, stringBuilder);
+        formatCapturedPieces(chessMatch, stringBuilder);
 
         stringBuilder.append("\nTurn: ").append(chessMatch.getTurn());
 
@@ -43,10 +43,12 @@ public class Display {
         System.out.println(stringBuilder);
     }
 
-    private void formatCapturedPieces(List<ChessPiece> captured, StringBuilder stringBuilder) {
+    private void formatCapturedPieces(ChessMatch chessMatch, StringBuilder stringBuilder) {
         Arrays.stream(ChessPiece.Color.values())
                 .map(color -> {
-                    List<ChessPiece> pieces = captured.stream()
+                    List<ChessPiece> pieces = chessMatch.getCapturedPieces()
+                            .stream()
+                            .map(ChessPiece.class::cast)
                             .filter(p -> p.getColor() == color)
                             .toList();
 
