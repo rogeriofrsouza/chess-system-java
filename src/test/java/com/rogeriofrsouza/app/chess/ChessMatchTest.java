@@ -164,33 +164,4 @@ class ChessMatchTest {
                 IllegalStateException.class,
                 () -> chessMatchMock.replacePromotedPiece("A"));
     }
-
-    @Test
-    @DisplayName("should return the pieces on the board")
-    void getPieces() {
-        ChessPiece[][] piecesExpected = new ChessPiece[][] {
-                {new Rook(boardMock, ChessPiece.Color.BLACK),
-                        new Queen(boardMock, ChessPiece.Color.BLACK)},
-                {new Rook(boardMock, ChessPiece.Color.WHITE),
-                        new Queen(boardMock, ChessPiece.Color.WHITE)}};
-
-        when(boardMock.getRows()).thenReturn(2);
-        when(boardMock.getColumns()).thenReturn(2);
-
-        when(boardMock.piece(anyInt(), anyInt()))
-                .thenReturn(piecesExpected[0][0])
-                .thenReturn(piecesExpected[0][1])
-                .thenReturn(piecesExpected[1][0])
-                .thenReturn(piecesExpected[1][1]);
-
-        ChessPiece[][] piecesActual = chessMatchMock.getPieces();
-
-        for (int i = 0; i < piecesExpected.length; i++) {
-            assertArrayEquals(piecesExpected[i], piecesActual[i]);
-        }
-
-        verify(boardMock).getRows();
-        verify(boardMock).getColumns();
-        verify(boardMock, times(4)).piece(anyInt(), anyInt());
-    }
 }

@@ -68,21 +68,6 @@ public class ChessMatch {
         }
     }
 
-    public ChessPiece[][] getPieces() {
-        int rows = board.getRows();
-        int columns = board.getColumns();
-
-        ChessPiece[][] pieces = new ChessPiece[rows][columns];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                pieces[i][j] = (ChessPiece) board.piece(i, j);
-            }
-        }
-
-        return pieces;
-    }
-
     public void computePossibleMoves(ChessPosition sourcePosition) {
         Position position = sourcePosition.toPosition();
         validateSourcePosition(position);
