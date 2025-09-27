@@ -1,10 +1,8 @@
 package com.rogeriofrsouza.app.chess;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -65,7 +63,7 @@ class ChessMatchTest {
         doReturn(true).when(boardMock).thereIsAPiece(position);
 
         doReturn(chessPiece).doReturn(pieceMock).doReturn(pieceMock)
-                .when(boardMock).piece(position);
+                .when(boardMock).getPieceAt(position);
 
         doReturn(true).when(pieceMock).isThereAnyPossibleMove();
         doReturn(possibleMovesExpected).when(pieceMock).computePossibleMoves();
@@ -82,7 +80,7 @@ class ChessMatchTest {
         Rook chessPiece = new Rook(new Board(), ChessPiece.Color.WHITE);
 
         doReturn(true).when(boardMock).thereIsAPiece(position);
-        doReturn(chessPiece).doReturn(pieceMock).when(boardMock).piece(position);
+        doReturn(chessPiece).doReturn(pieceMock).when(boardMock).getPieceAt(position);
         doReturn(false).when(pieceMock).isThereAnyPossibleMove();
 
         assertThrowsExactly(
@@ -98,7 +96,7 @@ class ChessMatchTest {
         Rook chessPiece = new Rook(new Board(), ChessPiece.Color.BLACK);
 
         doReturn(true).when(boardMock).thereIsAPiece(position);
-        doReturn(chessPiece).when(boardMock).piece(position);
+        doReturn(chessPiece).when(boardMock).getPieceAt(position);
 
         assertThrowsExactly(
                 ChessException.class,

@@ -72,7 +72,7 @@ public class ChessMatch {
         Position position = sourcePosition.toPosition();
         validateSourcePosition(position);
 
-        Piece piece = board.piece(position);
+        Piece piece = board.getPieceAt(position);
         piece.computePossibleMoves();
 
         if (!piece.isThereAnyPossibleMove()) {
@@ -109,7 +109,7 @@ public class ChessMatch {
             nextTurn();
         }
 
-        ChessPiece movedPiece = (ChessPiece) board.piece(target);
+        ChessPiece movedPiece = (ChessPiece) board.getPieceAt(target);
 
         promoted = null;
         enPassantVulnerable = null;
@@ -136,13 +136,13 @@ public class ChessMatch {
             throw new ChessException("There is no piece on source position");
         }
 
-        if (currentPlayer != ((ChessPiece) board.piece(position)).getColor()) {
+        if (currentPlayer != ((ChessPiece) board.getPieceAt(position)).getColor()) {
             throw new ChessException("The chosen piece is not yours");
         }
     }
 
     private void validateTargetPosition(Position source, Position target) {
-        if (!board.piece(source).isTargetPossibleMove(target)) {
+        if (!board.getPieceAt(source).isTargetPossibleMove(target)) {
             throw new ChessException("The chosen piece can't move to target position");
         }
     }

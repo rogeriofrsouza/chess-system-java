@@ -24,7 +24,7 @@ public class Board {
                 .forEach(r -> Arrays.setAll(squares[r], c -> new BoardSquare(new Position(r, c))));
     }
 
-    public Piece piece(Position position) {
+    public Piece getPieceAt(Position position) {
         if (!positionExists(position)) {
             throw new BoardException("Position not on the board");
         }
@@ -42,7 +42,7 @@ public class Board {
     }
 
     public Piece removePiece(Position position) {
-        Piece piece = piece(position);
+        Piece piece = getPieceAt(position);
 
         if (piece != null) {
             squares[position.getRow()][position.getColumn()].setPiece(null);
@@ -60,7 +60,7 @@ public class Board {
     }
 
     public boolean thereIsAPiece(Position position) {
-        return piece(position) != null;
+        return getPieceAt(position) != null;
     }
 
     public List<Piece> getPiecesOnTheBoard() {

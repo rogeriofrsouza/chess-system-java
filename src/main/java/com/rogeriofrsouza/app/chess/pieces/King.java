@@ -91,7 +91,7 @@ public class King extends ChessPiece {
                 Position p1 = new Position(position.getRow(), position.getColumn() + 1);
                 Position p2 = new Position(position.getRow(), position.getColumn() + 2);
 
-                if (getBoard().piece(p1) == null && getBoard().piece(p2) == null) {
+                if (getBoard().getPieceAt(p1) == null && getBoard().getPieceAt(p2) == null) {
                     p.setValues(position.getRow(), position.getColumn() + 2);
                     getBoard().makeSquarePossibleMove(p);
                 }
@@ -105,9 +105,9 @@ public class King extends ChessPiece {
                 Position p2 = new Position(position.getRow(), position.getColumn() - 2);
                 Position p3 = new Position(position.getRow(), position.getColumn() - 3);
 
-                if (getBoard().piece(p1) == null
-                        && getBoard().piece(p2) == null
-                        && getBoard().piece(p3) == null) {
+                if (getBoard().getPieceAt(p1) == null
+                        && getBoard().getPieceAt(p2) == null
+                        && getBoard().getPieceAt(p3) == null) {
                     p.setValues(position.getRow(), position.getColumn() - 2);
                     getBoard().makeSquarePossibleMove(p);
                 }
@@ -118,13 +118,13 @@ public class King extends ChessPiece {
     }
 
     private boolean canMove(Position position) {
-        ChessPiece p = (ChessPiece) getBoard().piece(position);
+        ChessPiece p = (ChessPiece) getBoard().getPieceAt(position);
 
         return p == null || p.getColor() != getColor();
     }
 
     private boolean testRookCastling(Position position) {
-        ChessPiece p = (ChessPiece) getBoard().piece(position);
+        ChessPiece p = (ChessPiece) getBoard().getPieceAt(position);
 
         return p != null
                 && p instanceof Rook
