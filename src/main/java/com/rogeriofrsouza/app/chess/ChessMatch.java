@@ -1,6 +1,7 @@
 package com.rogeriofrsouza.app.chess;
 
 import com.rogeriofrsouza.app.boardgame.Board;
+import com.rogeriofrsouza.app.boardgame.BoardSquare;
 import com.rogeriofrsouza.app.boardgame.Piece;
 import com.rogeriofrsouza.app.boardgame.Position;
 import com.rogeriofrsouza.app.chess.pieces.*;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -91,6 +93,14 @@ public class ChessMatch {
         if (!piece.isThereAnyPossibleMove()) {
             throw new ChessException("There is no possible moves for the chosen piece");
         }
+    }
+
+    public void resetPossibleMoves() {
+        BoardSquare[][] squares = getBoard().getSquares();
+
+        Arrays.stream(squares)
+                .flatMap(Arrays::stream)
+                .forEach(s -> s.setPossibleMove(false));
     }
 
     public void performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {

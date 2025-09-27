@@ -44,7 +44,7 @@ public class Program {
                 scanner.nextLine();
             }
 
-            chessMatch.getBoard().resetPossibleMoves();
+            chessMatch.resetPossibleMoves();
         } while (!chessMatch.isCheckMate());
 
         display.printMatch(chessMatch);

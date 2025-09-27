@@ -93,10 +93,4 @@ public class Board {
     public void makeSquarePossibleMove(Position position) {
         squares[position.getRow()][position.getColumn()].setPossibleMove(true);
     }
-
-    public void resetPossibleMoves() {
-        Arrays.stream(squares)
-                .flatMap(Arrays::stream)
-                .forEach(s -> s.setPossibleMove(false));
-    }
 }
