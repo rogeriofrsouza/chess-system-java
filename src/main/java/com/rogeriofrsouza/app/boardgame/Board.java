@@ -42,16 +42,14 @@ public class Board {
     }
 
     public Piece removePiece(Position position) {
-        if (piece(position) == null) {
-            return null;
+        Piece piece = piece(position);
+
+        if (piece != null) {
+            squares[position.getRow()][position.getColumn()].setPiece(null);
+            piece.position = null;
         }
 
-        Piece aux = piece(position);
-        aux.position = null; // Peça retirada do tabuleiro, não possui posição
-
-        squares[position.getRow()][position.getColumn()].setPiece(null);
-
-        return aux;
+        return piece;
     }
 
     public boolean positionExists(Position position) {
