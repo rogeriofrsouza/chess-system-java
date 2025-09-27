@@ -17,6 +17,7 @@ public class Program {
         Locale.setDefault(Locale.US);
         Scanner scanner = new Scanner(System.in);
         Prompt prompt = new Prompt(scanner);
+
         Display display = new Display();
         ChessMatch chessMatch = new ChessMatch();
 
@@ -32,7 +33,6 @@ public class Program {
 
                 System.out.print("Target: ");
                 ChessPosition target = prompt.readChessPosition();
-
                 chessMatch.performChessMove(source, target);
 
                 if (chessMatch.getPromoted() != null) {
