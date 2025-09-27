@@ -70,7 +70,14 @@ public class ChessMatch {
 
     public void computePossibleMoves(ChessPosition sourcePosition) {
         Position position = sourcePosition.toPosition();
-        validateSourcePosition(position);
+
+        if (!board.thereIsAPiece(position)) {
+            throw new ChessException("There is no piece on source position");
+        }
+
+        if (currentPlayer != ((ChessPiece) board.getPieceAt(position)).getColor()) {
+            throw new ChessException("The chosen piece is not yours");
+        }
 
         Piece piece = board.getPieceAt(position);
         piece.computePossibleMoves();
@@ -128,16 +135,6 @@ public class ChessMatch {
             if (List.of(source.getRow() - 2, source.getRow() + 2).contains(target.getRow())) {
                 enPassantVulnerable = movedPiece;
             }
-        }
-    }
-
-    private void validateSourcePosition(Position position) {
-        if (!board.thereIsAPiece(position)) {
-            throw new ChessException("There is no piece on source position");
-        }
-
-        if (currentPlayer != ((ChessPiece) board.getPieceAt(position)).getColor()) {
-            throw new ChessException("The chosen piece is not yours");
         }
     }
 
