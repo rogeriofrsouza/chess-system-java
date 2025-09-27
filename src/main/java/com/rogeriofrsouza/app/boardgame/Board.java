@@ -58,12 +58,11 @@ public class Board {
         return aux;
     }
 
-    private boolean positionExists(int row, int column) {
-        return row >= 0 && row < rows && column >= 0 && column < columns;
-    }
-
     public boolean positionExists(Position position) {
-        return positionExists(position.getRow(), position.getColumn());
+        int row = position.getRow();
+        int column = position.getColumn();
+
+        return row >= 0 && row < rows && column >= 0 && column < columns;
     }
 
     public boolean thereIsAPiece(Position position) {
