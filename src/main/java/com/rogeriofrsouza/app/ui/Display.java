@@ -18,7 +18,7 @@ public class Display {
         System.out.printf("%s%s", MOVE_CURSOR_HOME, CLEAR_SCREEN);
     }
 
-    public void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
+    public void printMatch(ChessMatch chessMatch) {
         printBoard(chessMatch.getBoard());
 
         var stringBuilder = new StringBuilder();

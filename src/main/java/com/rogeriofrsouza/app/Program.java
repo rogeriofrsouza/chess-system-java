@@ -7,7 +7,9 @@ import com.rogeriofrsouza.app.chess.ChessPosition;
 import com.rogeriofrsouza.app.ui.Display;
 import com.rogeriofrsouza.app.ui.Prompt;
 
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Program {
 
@@ -17,11 +19,10 @@ public class Program {
         Prompt prompt = new Prompt(scanner);
         Display display = new Display();
         ChessMatch chessMatch = new ChessMatch();
-        List<ChessPiece> captured = new ArrayList<>();
 
         do {
             try {
-                display.printMatch(chessMatch, captured);
+                display.printMatch(chessMatch);
 
                 System.out.print("Source: ");
                 ChessPosition source = prompt.readChessPosition();
@@ -46,6 +47,6 @@ public class Program {
             chessMatch.getBoard().resetPossibleMoves();
         } while (!chessMatch.isCheckMate());
 
-        display.printMatch(chessMatch, captured);
+        display.printMatch(chessMatch);
     }
 }
