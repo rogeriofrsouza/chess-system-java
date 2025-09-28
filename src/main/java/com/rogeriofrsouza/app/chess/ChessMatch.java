@@ -305,10 +305,8 @@ public class ChessMatch {
     }
 
     public ChessPiece replacePromotedPiece(ChessPiece.Name pieceName) {
-        return replacePromotedPiece(pieceName.getLetter());
-    }
+        String type = pieceName.getLetter();
 
-    public ChessPiece replacePromotedPiece(String type) {
         if (promoted == null) {
             throw new IllegalStateException("There is no piece to be promoted");
         }
