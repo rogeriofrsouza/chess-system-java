@@ -23,7 +23,16 @@ public class Prompt {
         return input.trim();
     }
 
-    public ChessPosition readChessPosition() {
+    public ChessPosition readSourcePosition() {
+        return readChessPosition("Source");
+    }
+
+    public ChessPosition readTargetPosition() {
+        return readChessPosition("Target");
+    }
+
+    private ChessPosition readChessPosition(String label) {
+        System.out.printf("%s: ", label);
         String input = readInput();
 
         if (input.length() < 2) {

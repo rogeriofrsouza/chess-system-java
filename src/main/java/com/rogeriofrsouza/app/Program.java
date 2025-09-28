@@ -25,14 +25,12 @@ public class Program {
             try {
                 display.printMatch(chessMatch);
 
-                System.out.print("Source: ");
-                ChessPosition source = prompt.readChessPosition();
+                ChessPosition source = prompt.readSourcePosition();
                 chessMatch.computePossibleMoves(source);
 
                 display.printBoard(chessMatch.getBoard());
 
-                System.out.print("Target: ");
-                ChessPosition target = prompt.readChessPosition();
+                ChessPosition target = prompt.readTargetPosition();
                 chessMatch.performChessMove(source, target);
 
                 if (chessMatch.getPromoted() != null) {
