@@ -1,7 +1,6 @@
 package com.rogeriofrsouza.app.chess;
 
 import com.rogeriofrsouza.app.boardgame.Board;
-import com.rogeriofrsouza.app.boardgame.BoardSquare;
 import com.rogeriofrsouza.app.boardgame.Piece;
 import com.rogeriofrsouza.app.boardgame.Position;
 import com.rogeriofrsouza.app.chess.pieces.*;
@@ -89,9 +88,7 @@ public class ChessMatch {
     }
 
     public void resetPossibleMoves() {
-        BoardSquare[][] squares = getBoard().getSquares();
-
-        Arrays.stream(squares)
+        Arrays.stream(getBoard().getSquares())
                 .flatMap(Arrays::stream)
                 .forEach(s -> s.setPossibleMove(false));
     }
