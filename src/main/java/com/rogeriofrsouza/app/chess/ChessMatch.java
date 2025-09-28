@@ -75,11 +75,12 @@ public class ChessMatch {
             throw new ChessException("There is no piece on source position");
         }
 
-        if (currentPlayer != ((ChessPiece) board.getPieceAt(position)).getColor()) {
+        Piece piece = board.getPieceAt(position);
+
+        if (currentPlayer != ((ChessPiece) piece).getColor()) {
             throw new ChessException("The chosen piece is not yours");
         }
 
-        Piece piece = board.getPieceAt(position);
         piece.computePossibleMoves();
 
         if (!piece.isThereAnyPossibleMove()) {
