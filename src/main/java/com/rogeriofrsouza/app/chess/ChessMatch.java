@@ -304,29 +304,20 @@ public class ChessMatch {
         return true;
     }
 
-    public ChessPiece replacePromotedPiece(ChessPiece.Name pieceName) {
-        String type = pieceName.getLetter();
-
-        if (promoted == null) {
-            throw new IllegalStateException("There is no piece to be promoted");
-        }
-
-        if (!List.of("B", "N", "R", "Q").contains(type)) {
-            return promoted;
-        }
-
+    public void replacePromotedPiece(ChessPiece.Name pieceName) {
         Position promotedPosition = promoted.getChessPosition().toPosition();
         board.removePiece(promotedPosition);
 
-        ChessPiece newPiece = switch (type) {
-            case "B" -> new Bishop(board, promoted.getColor());
-            case "N" -> new Knight(board, promoted.getColor());
-            case "R" -> new Rook(board, promoted.getColor());
-            default -> new Queen(board, promoted.getColor());
+        ChessPiece.Color promotedColor = promoted.getColor();
+
+        ChessPiece newPiece = switch (pieceName) {
+            case BISHOP -> new Bishop(board, promotedColor);
+            case KNIGHT -> new Knight(board, promotedColor);
+            case ROOK -> new Rook(board, promotedColor);
+            case QUEEN -> new Queen(board, promotedColor);
+            default -> throw new IllegalArgumentException("Invalid piece");
         };
 
         board.placePiece(newPiece, promotedPosition);
-
-        return newPiece;
     }
 }
