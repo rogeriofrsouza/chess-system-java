@@ -126,7 +126,6 @@ public class ChessMatch {
                     || movedPiece.getColor() == ChessPiece.Color.BLACK
                             && target.getRow() == 7) {
                 promoted = movedPiece;
-                promoted = replacePromotedPiece("Q");
             }
 
             // Special move: En Passant
