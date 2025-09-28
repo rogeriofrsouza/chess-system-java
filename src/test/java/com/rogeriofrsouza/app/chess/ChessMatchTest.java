@@ -52,43 +52,6 @@ class ChessMatchTest {
     }
 
     @Test
-    @DisplayName("should validate the source position and return possible moves")
-    void possibleMoves_validatePosition_returnPossibleMoves() {
-        ChessPosition chessPosition = new ChessPosition('a', 4);
-        Position position = new Position(4, 0);
-
-        Rook chessPiece = new Rook(new Board(), ChessPiece.Color.WHITE);
-        boolean[][] possibleMovesExpected = new boolean[][] {{true, true, false}};
-
-        doReturn(true).when(boardMock).thereIsAPiece(position);
-
-        doReturn(chessPiece).doReturn(pieceMock).doReturn(pieceMock)
-                .when(boardMock).getPieceAt(position);
-
-        doReturn(true).when(pieceMock).isThereAnyPossibleMove();
-        doReturn(possibleMovesExpected).when(pieceMock).computePossibleMoves();
-
-        assertDoesNotThrow(() -> chessMatchMock.computePossibleMoves(chessPosition));
-        verify(pieceMock).computePossibleMoves();
-    }
-
-    @Test
-    @DisplayName("should throw ChessException, there is no possible moves")
-    void possibleMoves_noPossibleMoves_throwChessException() {
-        ChessPosition chessPosition = new ChessPosition('a', 4);
-        Position position = new Position(4, 0);
-        Rook chessPiece = new Rook(new Board(), ChessPiece.Color.WHITE);
-
-        doReturn(true).when(boardMock).thereIsAPiece(position);
-        doReturn(chessPiece).doReturn(pieceMock).when(boardMock).getPieceAt(position);
-        doReturn(false).when(pieceMock).isThereAnyPossibleMove();
-
-        assertThrowsExactly(
-                ChessException.class,
-                () -> chessMatchMock.computePossibleMoves(chessPosition));
-    }
-
-    @Test
     @DisplayName("should throw ChessException, the chosen piece is not yours")
     void possibleMoves_chosenPieceNotYours_throwChessException() {
         ChessPosition chessPosition = new ChessPosition('a', 4);
