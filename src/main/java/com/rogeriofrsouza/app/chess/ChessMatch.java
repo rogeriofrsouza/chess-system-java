@@ -82,7 +82,7 @@ public class ChessMatch {
 
         piece.computePossibleMoves();
 
-        if (!piece.isThereAnyPossibleMove()) {
+        if (!board.isThereAnyPossibleMove()) {
             throw new ChessException("There is no possible moves for the chosen piece");
         }
     }

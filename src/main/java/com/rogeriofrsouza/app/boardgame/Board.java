@@ -78,4 +78,10 @@ public class Board {
     public boolean isTargetPossibleMove(Position position) {
         return squares[position.getRow()][position.getColumn()].isPossibleMove();
     }
+
+    public boolean isThereAnyPossibleMove() {
+        return Arrays.stream(squares)
+                .flatMap(Arrays::stream)
+                .anyMatch(BoardSquare::isPossibleMove);
+    }
 }
