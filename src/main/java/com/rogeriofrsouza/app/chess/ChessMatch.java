@@ -97,7 +97,9 @@ public class ChessMatch {
         Position source = sourcePosition.toPosition();
         Position target = targetPosition.toPosition();
 
-        validateTargetPosition(source, target);
+        if (!board.isTargetPossibleMove(target)) {
+            throw new ChessException("The chosen piece can't move to target position");
+        }
 
         Piece capturedPiece = makeMove(source, target);
 
@@ -132,12 +134,6 @@ public class ChessMatch {
             if (List.of(source.getRow() - 2, source.getRow() + 2).contains(target.getRow())) {
                 enPassantVulnerable = movedPiece;
             }
-        }
-    }
-
-    private void validateTargetPosition(Position source, Position target) {
-        if (!board.getPieceAt(source).isTargetPossibleMove(target)) {
-            throw new ChessException("The chosen piece can't move to target position");
         }
     }
 

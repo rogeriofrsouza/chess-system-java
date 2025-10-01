@@ -18,10 +18,6 @@ public abstract class Piece {
 
     public abstract boolean[][] computePossibleMoves();
 
-    public boolean isTargetPossibleMove(Position target) {
-        return getBoard().getSquares()[target.getRow()][target.getColumn()].isPossibleMove();
-    }
-
     public boolean isThereAnyPossibleMove() {
         return Arrays.stream(getBoard().getSquares())
                 .flatMap(Arrays::stream)

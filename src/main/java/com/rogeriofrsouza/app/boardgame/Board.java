@@ -74,4 +74,8 @@ public class Board {
     public void makeSquarePossibleMove(Position position) {
         squares[position.getRow()][position.getColumn()].setPossibleMove(true);
     }
+
+    public boolean isTargetPossibleMove(Position position) {
+        return squares[position.getRow()][position.getColumn()].isPossibleMove();
+    }
 }
