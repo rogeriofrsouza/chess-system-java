@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -70,13 +71,11 @@ public class ChessMatch {
     public void computePossibleMoves(ChessPosition sourcePosition) {
         Position position = sourcePosition.toPosition();
 
-        if (!board.thereIsAPiece(position)) {
-            throw new ChessException("There is no piece on source position");
-        }
+        ChessPiece piece = Optional.ofNullable(board.getPieceAt(position))
+                .map(ChessPiece.class::cast)
+                .orElseThrow(() -> new ChessException("There is no piece on source position"));
 
-        Piece piece = board.getPieceAt(position);
-
-        if (currentPlayer != ((ChessPiece) piece).getColor()) {
+        if (currentPlayer != piece.getColor()) {
             throw new ChessException("The chosen piece is not yours");
         }
 
