@@ -225,6 +225,7 @@ public class ChessMatch {
     private void nextTurn() {
         turn++;
         currentPlayer = getOpponentPlayer(currentPlayer);
+        board.resetPossibleMoves();
     }
 
     private boolean testCheck(ChessPiece.Color color) {
