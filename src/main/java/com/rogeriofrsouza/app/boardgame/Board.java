@@ -84,4 +84,10 @@ public class Board {
                 .flatMap(Arrays::stream)
                 .anyMatch(BoardSquare::isPossibleMove);
     }
+
+    public void resetPossibleMoves() {
+        Arrays.stream(squares)
+                .flatMap(Arrays::stream)
+                .forEach(s -> s.setPossibleMove(false));
+    }
 }

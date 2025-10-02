@@ -42,7 +42,7 @@ public class Program {
                 scanner.nextLine();
             }
 
-            chessMatch.resetPossibleMoves();
+            chessMatch.board.resetPossibleMoves();
         } while (!chessMatch.isCheckMate());
 
         display.printMatch(chessMatch);

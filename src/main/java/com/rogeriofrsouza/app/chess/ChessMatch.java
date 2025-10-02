@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +22,7 @@ public class ChessMatch {
     private ChessPiece enPassantVulnerable;
     private ChessPiece promoted;
 
-    private Board board;
+    public Board board;
 
     private List<Piece> capturedPieces = new ArrayList<>();
 
@@ -84,12 +83,6 @@ public class ChessMatch {
         if (!board.isThereAnyPossibleMove()) {
             throw new ChessException("There is no possible moves for the chosen piece");
         }
-    }
-
-    public void resetPossibleMoves() {
-        Arrays.stream(getBoard().getSquares())
-                .flatMap(Arrays::stream)
-                .forEach(s -> s.setPossibleMove(false));
     }
 
     public void performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
