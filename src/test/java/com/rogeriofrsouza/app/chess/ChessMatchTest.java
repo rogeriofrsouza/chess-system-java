@@ -1,29 +1,18 @@
 package com.rogeriofrsouza.app.chess;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import com.rogeriofrsouza.app.boardgame.Board;
+import com.rogeriofrsouza.app.boardgame.Position;
+import com.rogeriofrsouza.app.chess.pieces.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.rogeriofrsouza.app.boardgame.Board;
-import com.rogeriofrsouza.app.boardgame.Piece;
-import com.rogeriofrsouza.app.boardgame.Position;
-import com.rogeriofrsouza.app.chess.pieces.Bishop;
-import com.rogeriofrsouza.app.chess.pieces.Knight;
-import com.rogeriofrsouza.app.chess.pieces.Pawn;
-import com.rogeriofrsouza.app.chess.pieces.Queen;
-import com.rogeriofrsouza.app.chess.pieces.Rook;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 class ChessMatchTest {
@@ -33,15 +22,6 @@ class ChessMatchTest {
 
     @Mock
     private Board boardMock;
-
-    @Mock
-    private Piece pieceMock;
-
-    @Mock
-    private ChessPiece chessPieceMock;
-
-    @Mock
-    private ChessPosition chessPositionMock;
 
     @Test()
     @DisplayName("should place pieces on the board")
@@ -59,7 +39,6 @@ class ChessMatchTest {
         Position position = new Position(4, 0);
         Rook chessPiece = new Rook(new Board(), ChessPiece.Color.BLACK);
 
-        doReturn(true).when(boardMock).thereIsAPiece(position);
         doReturn(chessPiece).when(boardMock).getPieceAt(position);
 
         assertThrowsExactly(
@@ -71,9 +50,6 @@ class ChessMatchTest {
     @DisplayName("should throw ChessException, there is no piece on source position")
     void possibleMoves_noPieceOnPosition_throwChessException() {
         ChessPosition chessPosition = new ChessPosition('a', 4);
-        Position position = new Position(4, 0);
-
-        doReturn(false).when(boardMock).thereIsAPiece(position);
 
         assertThrowsExactly(
                 ChessException.class,
