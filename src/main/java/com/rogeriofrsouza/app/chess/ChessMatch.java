@@ -235,8 +235,11 @@ public class ChessMatch {
         return getPiecesByColor(opponentPlayer)
                 .stream()
                 .anyMatch(piece -> {
-                    boolean[][] possibleMoves = piece.computePossibleMoves();
-                    return possibleMoves[kingPosition.getRow()][kingPosition.getColumn()];
+                    piece.computePossibleMoves();
+                    boolean isInCheck = board.isTargetPossibleMove(kingPosition);
+                    board.resetPossibleMoves();
+
+                    return isInCheck;
                 });
     }
 
