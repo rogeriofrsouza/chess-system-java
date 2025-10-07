@@ -1,6 +1,7 @@
 package com.rogeriofrsouza.app.chess;
 
 import com.rogeriofrsouza.app.boardgame.Board;
+import com.rogeriofrsouza.app.boardgame.BoardSquare;
 import com.rogeriofrsouza.app.boardgame.Piece;
 import com.rogeriofrsouza.app.boardgame.Position;
 import com.rogeriofrsouza.app.chess.pieces.*;
@@ -266,31 +267,27 @@ public class ChessMatch {
     }
 
     private boolean testCheckMate(ChessPiece.Color color) {
-        if (!testCheck(color)) {
+        if (!check) {
             return false;
         }
 
-        List<ChessPiece> piecesFiltered = getPiecesByColor(color);
+        for (ChessPiece piece : getPiecesByColor(color)) {
+            piece.computePossibleMoves();
 
-        for (ChessPiece piece : piecesFiltered) {
-            boolean[][] possibleMoves = piece.computePossibleMoves();
+            for (BoardSquare square : board.findAvailableSquares()) {
+                Position source = piece.getChessPosition().toPosition();
+                Position target = square.getPosition();
 
-            for (int i = 0; i < board.getRows(); i++) {
-                for (int j = 0; j < board.getColumns(); j++) {
-                    if (possibleMoves[i][j]) {
-                        Position source = piece.getChessPosition().toPosition();
-                        Position target = new Position(i, j);
+                Piece capturedPiece = makeMove(source, target);
+                boolean isInCheck = testCheck(color);
+                undoMove(source, target, capturedPiece);
 
-                        Piece capturedPiece = makeMove(source, target);
-                        boolean testCheck = testCheck(color);
-                        undoMove(source, target, capturedPiece);
-
-                        if (!testCheck) {
-                            return false;
-                        }
-                    }
+                if (!isInCheck) {
+                    return false;
                 }
             }
+
+            board.resetPossibleMoves();
         }
 
         return true;

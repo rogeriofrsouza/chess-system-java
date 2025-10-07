@@ -90,4 +90,11 @@ public class Board {
                 .flatMap(Arrays::stream)
                 .forEach(s -> s.setPossibleMove(false));
     }
+
+    public List<BoardSquare> findAvailableSquares() {
+        return Arrays.stream(squares)
+                .flatMap(Arrays::stream)
+                .filter(BoardSquare::isPossibleMove)
+                .toList();
+    }
 }
