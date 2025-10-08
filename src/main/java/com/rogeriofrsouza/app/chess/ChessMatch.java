@@ -23,8 +23,7 @@ public class ChessMatch {
     private ChessPiece enPassantVulnerable;
     private ChessPiece promoted;
 
-    public Board board;
-
+    private final Board board;
     private List<Piece> capturedPieces = new ArrayList<>();
 
     public static final List<ChessPiece.Name> possiblePromotedPieces =
