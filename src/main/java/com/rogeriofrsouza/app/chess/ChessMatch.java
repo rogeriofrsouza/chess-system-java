@@ -90,6 +90,7 @@ public class ChessMatch {
         Position target = targetPosition.toPosition();
 
         if (!board.isTargetPossibleMove(target)) {
+            board.resetPossibleMoves();
             throw new ChessException("The chosen piece can't move to target position");
         }
 
