@@ -18,8 +18,6 @@ public class ChessPosition {
         this.row = row;
     }
 
-    // Não permitir que a coluna e a linha sejam livremente alteradas
-
     public Position toPosition() {
         return new Position(8 - row, column - 'a');
     }
@@ -30,6 +28,6 @@ public class ChessPosition {
 
     @Override
     public String toString() {
-        return "" + column + row; // Macete para forçar a concatenação
+        return "" + column + row;
     }
 }
