@@ -3,7 +3,6 @@ package com.rogeriofrsouza.app.chess;
 import com.rogeriofrsouza.app.boardgame.Board;
 import com.rogeriofrsouza.app.boardgame.Piece;
 import com.rogeriofrsouza.app.boardgame.Position;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -106,7 +105,7 @@ public abstract class ChessPiece extends Piece {
         }
     }
 
-    @AllArgsConstructor
+    @RequiredArgsConstructor
     @Getter
     public enum Name {
 
