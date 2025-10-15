@@ -29,18 +29,25 @@ public class Display {
         stringBuilder.append("\nTurn: ").append(chessMatch.getTurn());
 
         if (chessMatch.isCheckMate()) {
-            stringBuilder.append("\nCHECKMATE!\nWinner: ").append(chessMatch.getCurrentPlayer());
+            stringBuilder.append("\nCHECKMATE!\nWinner: ")
+                    .append(formatPlayerColor(chessMatch.getCurrentPlayer()));
+
             System.out.println(stringBuilder);
             return;
         }
 
-        stringBuilder.append("\nWaiting player: ").append(chessMatch.getCurrentPlayer());
+        stringBuilder.append("\nWaiting player: ")
+                .append(formatPlayerColor(chessMatch.getCurrentPlayer()));
 
         if (chessMatch.isCheck()) {
             stringBuilder.append("\nCHECK!");
         }
 
         System.out.println(stringBuilder);
+    }
+
+    private String formatPlayerColor(ChessPiece.Color color) {
+        return getColorAnsiCode(color) + color.getValue() + RESET;
     }
 
     private void formatCapturedPieces(ChessMatch chessMatch, StringBuilder stringBuilder) {
