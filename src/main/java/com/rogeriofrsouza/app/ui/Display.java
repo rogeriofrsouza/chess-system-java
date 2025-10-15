@@ -47,7 +47,7 @@ public class Display {
     }
 
     private String formatPlayerColor(ChessPiece.Color color) {
-        return getColorAnsiCode(color) + color.getValue() + RESET;
+        return getColorAnsiCode(color) + color.getLabel() + RESET;
     }
 
     private void formatCapturedPieces(ChessMatch chessMatch, StringBuilder stringBuilder) {
@@ -60,7 +60,7 @@ public class Display {
                             .toList();
 
                     return "%n%s: %s%s%s".formatted(
-                            color.getValue(), getColorAnsiCode(color), pieces, RESET);
+                            color.getLabel(), getColorAnsiCode(color), pieces, RESET);
                 })
                 .forEach(stringBuilder::append);
     }
