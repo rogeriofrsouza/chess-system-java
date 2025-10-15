@@ -66,27 +66,30 @@ class DisplayTest {
     @DisplayName("should print the match information and status")
     void printMatch_notCheckNotCheckmate_logMatch() {
         ChessMatch chessMatch = new ChessMatch();
-
         Board board = chessMatch.getBoard();
+
         List<Piece> captured = List.of(
                 new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE),
                 new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
+
         chessMatch.setCapturedPieces(captured);
 
-        String outputExpected = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
-                YELLOW,
-                captured.subList(2, 4),
-                RESET,
-                WHITE,
-                captured.subList(0, 2),
-                RESET) +
-                "Turn: " + chessMatch.getTurn() + "\n" +
-                "Waiting player: " + chessMatch.getCurrentPlayer() + "\n";
+        String string = """
+                Captured pieces
+                Black: %s%s%s
+                White: %s%s%s
+                Turn: %d
+                Waiting player: %s%s%s
+                """.formatted(
+                YELLOW, captured.subList(2, 4), RESET,
+                WHITE, captured.subList(0, 2), RESET,
+                chessMatch.getTurn(),
+                WHITE, chessMatch.getCurrentPlayer().getLabel(), RESET);
 
         doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch);
 
-        assertEquals(outputExpected, outputStream.toString());
+        assertEquals(string, outputStream.toString());
     }
 
     @Test
@@ -98,25 +101,26 @@ class DisplayTest {
         chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
         Board board = chessMatch.getBoard();
-        List<Piece> captured = List.of(
-                new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
+        List<Piece> captured = List.of(new Rook(board, ChessPiece.Color.WHITE), new Rook(board, ChessPiece.Color.WHITE));
         chessMatch.setCapturedPieces(captured);
 
-        String outputExpected = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
-                YELLOW,
-                List.of(),
-                RESET,
-                WHITE,
-                captured,
-                RESET) +
-                "Turn: " + chessMatch.getTurn() + "\n" +
-                "Waiting player: " + chessMatch.getCurrentPlayer() + "\n" +
-                "CHECK!\n";
+        String string = """
+                Captured pieces
+                Black: %s%s%s
+                White: %s%s%s
+                Turn: %d
+                Waiting player: %s%s%s
+                CHECK!
+                """.formatted(
+                YELLOW, List.of(), RESET,
+                WHITE, captured, RESET,
+                chessMatch.getTurn(),
+                YELLOW, chessMatch.getCurrentPlayer().getLabel(), RESET);
 
         doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch);
 
-        assertEquals(outputExpected, outputStream.toString());
+        assertEquals(string, outputStream.toString());
     }
 
     @Test
@@ -128,23 +132,25 @@ class DisplayTest {
         chessMatch.setCurrentPlayer(ChessPiece.Color.BLACK);
 
         Board board = chessMatch.getBoard();
-        List<Piece> captured = List.of(
-                new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
+        List<Piece> captured = List.of(new Rook(board, ChessPiece.Color.BLACK), new Rook(board, ChessPiece.Color.BLACK));
         chessMatch.setCapturedPieces(captured);
 
-        String stringBuilder = "Captured pieces%nBlack: %s%s%s%nWhite: %s%s%s%n".formatted(
-                YELLOW,
-                captured,
-                RESET,
-                WHITE,
-                List.of(),
-                RESET) +
-                "Turn: " + chessMatch.getTurn() + "\n" +
-                "CHECKMATE!\nWinner: " + chessMatch.getCurrentPlayer() + "\n";
+        String string = """
+                Captured pieces
+                Black: %s%s%s
+                White: %s%s%s
+                Turn: %d
+                CHECKMATE!
+                Winner: %s%s%s
+                """.formatted(
+                YELLOW, captured, RESET,
+                WHITE, List.of(), RESET,
+                chessMatch.getTurn(),
+                YELLOW, chessMatch.getCurrentPlayer().getLabel(), RESET);
 
         doNothing().when(display).printBoard(board);
         display.printMatch(chessMatch);
 
-        assertEquals(stringBuilder, outputStream.toString());
+        assertEquals(string, outputStream.toString());
     }
 }
