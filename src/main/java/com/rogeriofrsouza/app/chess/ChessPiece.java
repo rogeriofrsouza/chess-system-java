@@ -128,5 +128,9 @@ public abstract class ChessPiece extends Piece {
         WHITE("White");
 
         private final String value;
+
+        public Color getOpponentPlayer() {
+            return this == BLACK ? WHITE : BLACK;
+        }
     }
 }

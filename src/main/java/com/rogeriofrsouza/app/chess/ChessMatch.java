@@ -100,9 +100,9 @@ public class ChessMatch {
             throw new ChessException("You can't put yourself in check");
         }
 
-        check = testCheck(getOpponentPlayer(currentPlayer));
+        check = testCheck(currentPlayer.getOpponentPlayer());
 
-        if (testCheckMate(getOpponentPlayer(currentPlayer))) {
+        if (testCheckMate(currentPlayer.getOpponentPlayer())) {
             checkMate = true;
         } else {
             nextTurn();
@@ -224,15 +224,14 @@ public class ChessMatch {
 
     private void nextTurn() {
         turn++;
-        currentPlayer = getOpponentPlayer(currentPlayer);
+        currentPlayer = currentPlayer.getOpponentPlayer();
         board.resetPossibleMoves();
     }
 
     private boolean testCheck(ChessPiece.Color color) {
         Position kingPosition = searchKing(color).getChessPosition().toPosition();
-        ChessPiece.Color opponentPlayer = getOpponentPlayer(color);
 
-        return getPiecesByColor(opponentPlayer)
+        return getPiecesByColor(color.getOpponentPlayer())
                 .stream()
                 .anyMatch(piece -> {
                     piece.computePossibleMoves();
@@ -257,12 +256,6 @@ public class ChessMatch {
                 .map(ChessPiece.class::cast)
                 .filter(p -> p.getColor() == color)
                 .toList();
-    }
-
-    private ChessPiece.Color getOpponentPlayer(ChessPiece.Color color) {
-        return color == ChessPiece.Color.WHITE
-                ? ChessPiece.Color.BLACK
-                : ChessPiece.Color.WHITE;
     }
 
     private boolean testCheckMate(ChessPiece.Color color) {
