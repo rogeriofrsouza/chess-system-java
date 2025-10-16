@@ -95,6 +95,7 @@ public class ChessMatch {
         }
 
         Piece capturedPiece = makeMove(source, target);
+        board.resetPossibleMoves();
 
         if (testCheck(currentPlayer)) {
             undoMove(source, target, capturedPiece);
